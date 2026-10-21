@@ -2,6 +2,7 @@
 #define GUARD_GENERATIONS_H
 
 #include "global.h"
+#include "constants/generations.h"
 #include "constants/regions.h"
 #include "battle_gimmick.h"
 
@@ -42,6 +43,19 @@ bool32 Generations_IsPartySpeciesAllowed(enum Species species);
 bool32 Generations_CanAccessPreviousRegionPC(enum Region region);
 bool32 Generations_UnlockMechanic(enum Gimmick gimmick);
 bool32 Generations_IsMechanicUnlocked(enum Gimmick gimmick);
+
+// First entry deposits the entire old party and installs the chosen starter.
+// Calls are synchronous; no save, task or script runs inside the transaction.
+u32 Generations_EnterJohto(enum Species starter);
+bool32 Generations_ReturnToKanto(void);
+bool32 Generations_CanUsePC(void);
+void Generations_TravelToJohto(void);
+void Generations_TravelToKanto(void);
+void Generations_CheckPC(void);
+void Generations_TestProgress(void);
+#if TESTING
+extern s32 gGenerationsTransferFailAfter;
+#endif
 
 // Isolated demonstration only. Not wired into battle controllers: see STATUS.md.
 void Generations_ProjectBattleMon(struct Pokemon *mon, struct BattlePokemon *battleMon, enum Region region);

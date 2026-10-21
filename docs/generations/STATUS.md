@@ -1,5 +1,10 @@
 # Kanto Foundation Prototype
 
+The next milestone is now available: [Johto progression test ROM](JOHTO_TEST_ROM.md).
+It adds transport, atomic first-entry party deposit, starter reservations,
+New Bark, a Route 29 test area, healing and test-only progress shortcuts.
+The foundation validation record below describes the original Kanto baseline.
+
 ## Scope
 
 The prototype reuses this fork's FRLG maps, Oak introduction, starter scene,
@@ -117,16 +122,12 @@ and corruption tests. Increasing TOTAL_BOXES_COUNT alone is unsafe.
 
 ## Not yet implemented
 
-- Johto and later maps, starter events, transport/cutscenes and return travel.
-- First-entry transfer transaction and per-Pokémon region provenance.
-  Before any party removal, preflight space for the entire party, reserve
-  destination slots, stage exact BoxPokemon copies and verify them, then
-  update party/progression together. Full storage must abort with no
-  change. Mail, eggs, fusions and held items need explicit handling. Do
-  not use repeated CopyMonToPC calls as an atomic transaction: that helper
-  restores PP and can fail partway through a party.
-- PC UI enforcement for origin restrictions. A permission bit alone does
-  not restrict withdrawing, moving, daycare, trades or alternate PC paths.
+- Johto beyond the New Bark/Route 29 test area, later regions and full campaigns.
+- Per-Pokémon regional provenance and selective access to earlier-region PC mons.
+  The expedition currently locks the whole PC and return travel until four
+  Johto badges; see the milestone document for transfer and mail/fusion policy.
+- Selective PC UI enforcement for origin restrictions and audits of daycare,
+  trades and alternate acquisition paths beyond the closed expedition area.
 - Cumulative regional dex UI for Johto–Paldea. Threshold policy is present;
   currently the native Kanto/national interfaces remain in use. Unlocking
   must never reset seen/caught records.

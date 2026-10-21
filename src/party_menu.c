@@ -1,4 +1,5 @@
 #include "global.h"
+#include "generations.h"
 #include "malloc.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -4306,6 +4307,11 @@ static void DisplayCantUseSurfMessage(void)
 
 bool32 SetUpFieldMove_Fly(void)
 {
+    // Johto has no Fly map yet. Cross-region travel must restore regional
+    // badges and respawn through the expedition transport instead.
+    if (Generations_GetCurrentRegion() == REGION_JOHTO)
+        return FALSE;
+
     if (!CheckFollowerNPCFlag(FOLLOWER_NPC_FLAG_CAN_LEAVE_ROUTE))
         return FALSE;
 

@@ -640,3 +640,8 @@ gSpecials::
 	def_special CheckAddCoins
 
 	def_special Generations_RecordStarter
+
+	def_special Generations_TravelToJohto
+	def_special Generations_TravelToKanto
+	def_special Generations_CheckPC
+	def_special Generations_TestProgress

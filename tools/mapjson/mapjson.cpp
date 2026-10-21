@@ -750,8 +750,10 @@ void process_groups(string groups_filepath, vector<string> &map_filepaths, strin
         }
         string map_name = json_to_string(map_data, "name");
 
+        // The FRLG campaign now includes the Johto expedition maps. Region
+        // describes campaign geography, not a separate map binary format.
         if ((version == "emerald" && region != "REGION_HOENN")
-         || (version == "firered" && region != "REGION_KANTO")) {
+         || (version == "firered" && region != "REGION_KANTO" && region != "REGION_JOHTO")) {
             invalid_maps.push_back(map_name);
         }
     }

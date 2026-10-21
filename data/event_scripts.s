@@ -2,6 +2,7 @@
 #include "config/battle.h"
 #include "config/item.h"
 #include "constants/global.h"
+#include "constants/generations.h"
 #include "constants/apprentice.h"
 #include "constants/apricorn_tree.h"
 #include "constants/battle.h"
@@ -1738,3 +1739,9 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/battle_frontier.inc"
 	.include "data/scripts/apricorn_tree.inc"
 	.include "data/scripts/wild_encounter.inc"
+
+	.include "data/scripts/generations.inc"
+	.include "data/maps/NewBarkTown/scripts.inc"
+	.include "data/maps/NewBarkTown_ElmsLab/scripts.inc"
+	.include "data/maps/NewBarkTown_HealingHouse/scripts.inc"
+	.include "data/maps/JohtoRoute29/scripts.inc"

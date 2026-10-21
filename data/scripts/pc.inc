@@ -31,6 +31,8 @@ EventScript_AccessPlayersPC::
 	end
 
 EventScript_AccessPokemonStorage::
+	special Generations_CheckPC
+	goto_if_eq VAR_RESULT, FALSE, Generations_EventScript_PCMenuLocked
 	playse SE_PC_LOGIN
 	call_if_unset FLAG_SYS_PC_LANETTE, EventScript_AccessSomeonesPC
 	call_if_set FLAG_SYS_PC_LANETTE, EventScript_AccessLanettesPC
@@ -66,8 +68,18 @@ EventScript_AccessHallOfFame::
 	end
 
 EventScript_AccessPokemonBoxLink::
+	special Generations_CheckPC
+	goto_if_eq VAR_RESULT, FALSE, Generations_EventScript_BoxLinkLocked
 	playse SE_PC_LOGIN
 	msgbox gText_StorageSystemOpened, MSGBOX_DEFAULT
 	special ShowPokemonStorageSystemPC
 	goto EventScript_TurnOffPC
 	end
+
+Generations_EventScript_PCMenuLocked::
+	msgbox Generations_Text_PCLocked, MSGBOX_DEFAULT
+	goto EventScript_PCMainMenu
+
+Generations_EventScript_BoxLinkLocked::
+	msgbox Generations_Text_PCLocked, MSGBOX_DEFAULT
+	goto EventScript_TurnOffPC
