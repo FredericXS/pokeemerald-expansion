@@ -13,6 +13,12 @@ cd /workspace/pokeemerald-expansion
 make -j5 -O all BUILD_NAME=generations-progression GENERATIONS_TEST_ROM=1
 ```
 
+The [Johto test ROM workflow](https://github.com/FredericXS/pokeemerald-expansion/actions/workflows/test-rom.yml)
+builds this ROM on pushes to `master`/`upcoming` and pull requests. It can
+also be started manually with **Run workflow**. Open a successful run and
+download **pokemon-generations-johto-test** under **Artifacts**. The ZIP
+contains the playable `.gba` and its SHA-256 checksum, retained for 30 days.
+
 Open `pokegenerations-progression.gba` in mGBA. Use a new game or a backup
 of a save made by this project's schema `0x4701`; never use an original
 Emerald/FRLG save. The file name keeps test saves separate from the regular
