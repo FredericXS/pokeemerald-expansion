@@ -1,4 +1,5 @@
 #include "global.h"
+#include "generations.h"
 #include "main.h"
 #include "credits.h"
 #include "event_data.h"
@@ -99,6 +100,8 @@ bool8 EnterHallOfFame(void)
     int i;
     bool8 gaveAtLeastOneRibbon;
     HealPlayerParty();
+    if (Generations_RecordLeagueVictory(Generations_GetCurrentRegion()))
+        Generations_RecordChampionVictory(Generations_GetCurrentRegion());
     if (FlagGet(FLAG_SYS_GAME_CLEAR) == TRUE)
     {
         gHasHallOfFameRecords = TRUE;

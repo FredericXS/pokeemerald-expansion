@@ -117,8 +117,9 @@ static const u8 sStarterLabelCoords[STARTER_MON_COUNT][2] =
 static const u16 sStarterMon[STARTER_MON_COUNT] =
 {
     GRASS_STARTER,
-    FIRE_STARTER,
-    WATER_STARTER,
+    // Oak scripts persist 0=Bulbasaur, 1=Squirtle, 2=Charmander.
+    IS_FRLG ? WATER_STARTER : FIRE_STARTER,
+    IS_FRLG ? FIRE_STARTER : WATER_STARTER,
 };
 
 static const struct BgTemplate sBgTemplates[3] =

@@ -1,6 +1,8 @@
 # Summary
 
 - [README](./README.md)
+- [Generations architecture](./ARCHITECTURE.md)
+- [Kanto Foundation status](./generations/STATUS.md)
 - [FEATURES](./FEATURES.md)
 - [Installation](./INSTALL.md)
     - [Setting up WSL1 (Legacy Portion)](./legacy_WSL1_INSTALL.md)

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "generations.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
@@ -36,6 +37,8 @@ void AssignUsableGimmicks(void)
 // Returns whether a battler is able to use a gimmick. Checks consumption and gimmick specific functions.
 bool32 CanActivateGimmick(enum BattlerId battler, enum Gimmick gimmick)
 {
+    if (Generations_IsActive() && IsOnPlayerSide(battler) && !Generations_IsMechanicUnlocked(gimmick))
+        return FALSE;
     return gGimmicksInfo[gimmick].CanActivate != NULL && gGimmicksInfo[gimmick].CanActivate(battler);
 }
 

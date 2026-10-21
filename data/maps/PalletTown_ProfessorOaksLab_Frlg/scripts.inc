@@ -1118,6 +1118,7 @@ PalletTown_ProfessorOaksLab_EventScript_ChoseStarter::
 	setflag FLAG_SYS_POKEMON_GET
 	setflag FLAG_PALLET_LADY_NOT_BLOCKING_SIGN
 	givemon PLAYER_STARTER_SPECIES, 5
+	special Generations_RecordStarter
 	copyvar VAR_STARTER_MON, PLAYER_STARTER_NUM
 	bufferspeciesname STR_VAR_1, PLAYER_STARTER_SPECIES
 	message PalletTown_ProfessorOaksLab_Text_ReceivedMonFromOak

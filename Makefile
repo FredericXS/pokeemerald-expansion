@@ -1,8 +1,9 @@
-GAME_VERSION ?= EMERALD
-TITLE        ?= POKEMON EMER
-GAME_CODE    ?= BPEE
-BUILD_NAME   ?= emerald
-MAP_VERSION  ?= emerald
+# Pokémon Generations uses the Kanto content already integrated into this engine.
+GAME_VERSION ?= FIRERED
+TITLE        ?= POKEMON GEN
+GAME_CODE    ?= BPRE
+BUILD_NAME   ?= generations
+MAP_VERSION  ?= firered
 
 ifeq (firered, $(or $(BUILD), $(MAKECMDGOALS)))
   	GAME_VERSION 	:= FIRERED

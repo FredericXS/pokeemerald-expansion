@@ -1,6 +1,8 @@
 #include "global.h"
 #include "clock.h"
 #include "new_game.h"
+#include "generations.h"
+#include "constants/heal_locations.h"
 #include "random.h"
 #include "clock.h"
 #include "pokemon.h"
@@ -234,6 +236,11 @@ void NewGameInitData(void)
     ResetItemFlags();
     ResetDexNav();
     ClearFollowerNPCData();
+    if (IS_FRLG)
+    {
+        Generations_InitNewGame();
+        SetLastHealLocationWarp(HEAL_LOCATION_PALLET_TOWN);
+    }
 }
 
 static void ResetMiniGamesRecords(void)

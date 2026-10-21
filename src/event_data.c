@@ -1,4 +1,5 @@
 #include "global.h"
+#include "generations.h"
 #include "event_data.h"
 #include "pokedex.h"
 
@@ -223,6 +224,7 @@ u8 FlagSet(u16 id)
     u8 *ptr = GetFlagPointer(id);
     if (ptr)
         *ptr |= 1 << (id & 7);
+    Generations_OnFlagSet(id);
     return 0;
 }
 

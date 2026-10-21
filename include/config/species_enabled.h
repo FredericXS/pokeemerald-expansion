@@ -17,7 +17,7 @@
 #define P_GEN_9_POKEMON                  TRUE // Generation 9 Pokémon (SV)
 
 // Setting this to TRUE will add the new evolutions to the Regional Dex.
-#define P_NEW_EVOS_IN_REGIONAL_DEX       TRUE
+#define P_NEW_EVOS_IN_REGIONAL_DEX       FALSE // Generations: original regional orders; all species remain compiled.
 
 // Battle gimmick specific Forms.
 #define P_MEGA_EVOLUTIONS                TRUE
