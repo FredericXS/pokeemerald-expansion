@@ -265,7 +265,11 @@ if __name__ == '__main__':
     for path,data in OUTPUTS.items():
         target=ROOT/path
         if args.check:
-            if not target.exists() or target.read_bytes()!=data:differences.append(path)
+            actual = target.read_bytes() if target.exists() else None
+            # Git checks out .pal files as CRLF; palette contents are text.
+            if actual is not None and target.suffix == '.pal':
+                actual = actual.replace(b'\r\n', b'\n')
+            if actual != data:differences.append(path)
         else:
             target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
     if differences:raise SystemExit('Generated files differ: '+', '.join(differences))
