@@ -1,6 +1,9 @@
 #ifndef GUARD_tilesets_H
 #define GUARD_tilesets_H
 
+extern const struct Tileset gTileset_JohtoGeneral;
+extern const struct Tileset gTileset_Johto;
+
 extern const u32 gTilesetTiles_General[];
 extern const u16 gTilesetPalettes_General[][16];
 

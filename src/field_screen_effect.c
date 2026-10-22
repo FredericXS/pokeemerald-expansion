@@ -1471,6 +1471,11 @@ static void Task_RushInjuredPokemonToCenter(u8 taskId)
                     StringCopy(gStringVar1, COMPOUND_STRING("PROF. BIRCH"));
                 ScriptContext_SetupScript(EventScript_AfterWhiteOutMomHeal);
             }
+            else if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_NEW_BARK_TOWN_HEALING_HOUSE)
+                  && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_NEW_BARK_TOWN_HEALING_HOUSE))
+            {
+                ScriptContext_SetupScript(Generations_EventScript_AfterWhiteout);
+            }
             else if (IS_FRLG)
             {
                 ScriptContext_SetupScript(EventScript_AfterWhiteOutHeal_Frlg);

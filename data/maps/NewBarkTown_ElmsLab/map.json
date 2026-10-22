@@ -1,7 +1,7 @@
 {
   "id": "MAP_NEW_BARK_TOWN_ELMS_LAB",
   "name": "NewBarkTown_ElmsLab",
-  "layout": "LAYOUT_PALLET_TOWN_PROFESSOR_OAKS_LAB",
+  "layout": "LAYOUT_NEW_BARK_ELMS_LAB",
   "music": "MUS_RG_OAK_LAB",
   "region": "REGION_JOHTO",
   "region_map_section": "MAPSEC_NEW_BARK_TOWN",
@@ -19,8 +19,8 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SCIENTIST",
-      "x": 6,
-      "y": 3,
+      "x": 4,
+      "y": 4,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -33,9 +33,9 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 8,
-      "y": 4,
-      "elevation": 3,
+      "x": 10,
+      "y": 5,
+      "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
@@ -47,9 +47,9 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 9,
-      "y": 4,
-      "elevation": 3,
+      "x": 11,
+      "y": 5,
+      "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
@@ -61,9 +61,9 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 10,
-      "y": 4,
-      "elevation": 3,
+      "x": 12,
+      "y": 5,
+      "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
@@ -100,11 +100,19 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 2,
+      "x": 3,
       "y": 1,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Generations_EventScript_PC"
+    },
+    {
+      "type": "sign",
+      "x": 12,
+      "y": 1,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Generations_EventScript_ResearchNotes"
     }
   ]
 }

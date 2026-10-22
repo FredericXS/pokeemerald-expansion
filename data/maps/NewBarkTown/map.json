@@ -18,15 +18,15 @@
     {
       "map": "MAP_JOHTO_ROUTE29",
       "offset": 0,
-      "direction": "up"
+      "direction": "left"
     }
   ],
   "object_events": [
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SAILOR_FRLG",
-      "x": 10,
-      "y": 10,
+      "x": 27,
+      "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -39,8 +39,8 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SCIENTIST",
-      "x": 13,
-      "y": 17,
+      "x": 14,
+      "y": 15,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -49,21 +49,56 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Generations_EventScript_TestProgress",
       "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_1_FRLG",
+      "x": 17,
+      "y": 16,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Generations_EventScript_TownResident",
+      "flag": "0"
     }
   ],
   "warp_events": [
     {
-      "x": 6,
-      "y": 7,
+      "x": 23,
+      "y": 12,
       "elevation": 0,
       "dest_map": "MAP_NEW_BARK_TOWN_HEALING_HOUSE",
       "dest_warp_id": "0"
     },
     {
-      "x": 16,
-      "y": 13,
+      "x": 12,
+      "y": 9,
       "elevation": 0,
       "dest_map": "MAP_NEW_BARK_TOWN_ELMS_LAB",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 7,
+      "y": 21,
+      "elevation": 0,
+      "dest_map": "MAP_NEW_BARK_SOUTHWEST_HOUSE",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 18,
+      "y": 23,
+      "elevation": 0,
+      "dest_map": "MAP_NEW_BARK_RIVAL_HOUSE",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_NEW_BARK_ELMS_STUDY",
       "dest_warp_id": "0"
     }
   ],
@@ -71,11 +106,27 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 9,
-      "y": 11,
+      "x": 21,
+      "y": 12,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Generations_EventScript_TownSign"
+    },
+    {
+      "type": "sign",
+      "x": 10,
+      "y": 9,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Generations_EventScript_LabSign"
+    },
+    {
+      "type": "sign",
+      "x": 16,
+      "y": 23,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Generations_EventScript_RivalHouseSign"
     }
   ]
 }

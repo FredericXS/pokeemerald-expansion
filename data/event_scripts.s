@@ -1745,3 +1745,8 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/NewBarkTown_ElmsLab/scripts.inc"
 	.include "data/maps/NewBarkTown_HealingHouse/scripts.inc"
 	.include "data/maps/JohtoRoute29/scripts.inc"
+
+	.include "data/maps/NewBarkTown_SouthwestHouse/scripts.inc"
+	.include "data/maps/NewBarkTown_RivalHouse/scripts.inc"
+	.include "data/maps/NewBarkTown_ElmsStudy/scripts.inc"
+	.include "data/maps/JohtoRoute29_Gatehouse/scripts.inc"

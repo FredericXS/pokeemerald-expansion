@@ -1,4 +1,5 @@
 #include "global.h"
+#include "generations.h"
 #include "overworld.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
@@ -2122,6 +2123,13 @@ void CB2_ContinueSavedGame(void)
     if (gSaveFileStatus == SAVE_STATUS_ERROR)
         ResetWinStreaks();
 
+    if (Generations_RelocateLegacyJohtoSave())
+    {
+        ClearContinueGameWarpStatus();
+        WarpIntoMap();
+        SetMainCallback2(CB2_LoadMap);
+        return;
+    }
     LoadSaveblockMapHeader();
     ClearDiveAndHoleWarps();
     trainerHillMapId = GetCurrentTrainerHillMapId();

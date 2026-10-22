@@ -8,6 +8,7 @@
 #include "pokedex.h"
 #include "overworld.h"
 #include "constants/heal_locations.h"
+#include "constants/maps.h"
 
 #if TESTING
 // Exercise the same rollback path as a failed write/readback, without shipping
@@ -63,6 +64,7 @@ u32 Generations_EnterJohto(enum Species starter)
         // Return visits never deposit or award a second starter.
         if (!(state & REGION_PROGRESS_STARTER) || count == 0)
             return GENERATIONS_TRAVEL_LOCKED;
+        VarSet(VAR_GENERATIONS_KANTO + 1, state | REGION_PROGRESS_HGSS_MAPS);
         RestoreBadgeFlags(REGION_JOHTO);
         SetLastHealLocationWarp(HEAL_LOCATION_NEW_BARK_TOWN);
         return GENERATIONS_TRAVEL_OK;
@@ -162,7 +164,7 @@ u32 Generations_EnterJohto(enum Species starter)
     ZeroPlayerPartyMons();
     gParties[B_TRAINER_PLAYER][0] = transfer->starter;
     gPartiesCount[B_TRAINER_PLAYER] = 1;
-    VarSet(VAR_GENERATIONS_KANTO + 1, state | REGION_PROGRESS_ENTERED | REGION_PROGRESS_STARTER);
+    VarSet(VAR_GENERATIONS_KANTO + 1, state | REGION_PROGRESS_ENTERED | REGION_PROGRESS_STARTER | REGION_PROGRESS_HGSS_MAPS);
     RestoreBadgeFlags(REGION_JOHTO);
     SetLastHealLocationWarp(HEAL_LOCATION_NEW_BARK_TOWN);
     GetSetPokedexFlag(SpeciesToNationalPokedexNum(starter), FLAG_SET_SEEN);
@@ -223,4 +225,36 @@ void Generations_TestProgress(void)
     RestoreBadgeFlags(region);
     gSpecialVar_Result = TRUE;
 #endif
+}
+
+void Generations_OnJohtoMapLoaded(void)
+{
+    if (Generations_GetCurrentRegion() == REGION_JOHTO)
+        VarSet(VAR_GENERATIONS_KANTO + 1, Generations_GetRegionState(REGION_JOHTO) | REGION_PROGRESS_HGSS_MAPS);
+}
+
+bool32 Generations_RelocateLegacyJohtoSave(void)
+{
+    u32 state = Generations_GetRegionState(REGION_JOHTO);
+    if (Generations_GetCurrentRegion() != REGION_JOHTO || (state & REGION_PROGRESS_HGSS_MAPS))
+        return FALSE;
+    u32 map = (gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum;
+    s16 x, y;
+    switch (map)
+    {
+    case MAP_NEW_BARK_TOWN: x = 14; y = 14; break;
+    case MAP_JOHTO_ROUTE29: x = 93; y = 14; break;
+    case MAP_NEW_BARK_TOWN_ELMS_LAB: x = 6; y = 10; break;
+    case MAP_NEW_BARK_TOWN_HEALING_HOUSE: x = 6; y = 6; break;
+    default: return FALSE;
+    }
+    // These four map ids predate the HGSS layouts. Reload their objects and
+    // relocate once, before the saved position can spawn inside a wall or
+    // outside the now-horizontal route. Party and storage are untouched.
+    gSaveBlock1Ptr->pos.x = x;
+    gSaveBlock1Ptr->pos.y = y;
+    SetWarpDestination(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, WARP_ID_NONE, x, y);
+    VarSet(VAR_GENERATIONS_KANTO + 1, state | REGION_PROGRESS_HGSS_MAPS);
+    SetLastHealLocationWarp(HEAL_LOCATION_NEW_BARK_TOWN);
+    return TRUE;
 }

@@ -645,3 +645,5 @@ gSpecials::
 	def_special Generations_TravelToKanto
 	def_special Generations_CheckPC
 	def_special Generations_TestProgress
+
+	def_special Generations_OnJohtoMapLoaded

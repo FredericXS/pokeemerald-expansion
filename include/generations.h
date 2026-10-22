@@ -21,6 +21,7 @@
 #define REGION_PROGRESS_ENTERED     (1 << 11)
 #define REGION_PROGRESS_LEGACY_PC    (1 << 12)
 #define REGION_PROGRESS_STARTER     (1 << 13)
+#define REGION_PROGRESS_HGSS_MAPS   (1 << 14)
 
 struct Pokemon;
 struct BattlePokemon;
@@ -52,6 +53,8 @@ bool32 Generations_CanUsePC(void);
 void Generations_TravelToJohto(void);
 void Generations_TravelToKanto(void);
 void Generations_CheckPC(void);
+void Generations_OnJohtoMapLoaded(void);
+bool32 Generations_RelocateLegacyJohtoSave(void);
 void Generations_TestProgress(void);
 #if TESTING
 extern s32 gGenerationsTransferFailAfter;

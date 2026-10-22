@@ -3038,3 +3038,32 @@ const u16 ALIGNED(4) gTilesetPalettes_General_Frlg[][16] =
 const u32 gTilesetTiles_General_Frlg[] = INCGFX_U32("data/tilesets/primary/general_frlg/tiles.png", ".4bpp.smol");
 
 #endif // IS_FRLG
+
+// HGSS-based Johto map assets; see graphics/johto/CREDITS.md.
+const u16 ALIGNED(4) gTilesetPalettes_JohtoGeneral[][16] =
+{
+    INCGFX_U16("data/tilesets/primary/johto/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/johto/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/johto/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/johto/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/johto/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/johto/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/primary/johto/palettes/06.pal", ".gbapal"),
+};
+const u32 gTilesetTiles_Johto[] = INCGFX_U32("data/tilesets/secondary/johto/tiles.png", ".4bpp.fastSmol");
+const u16 ALIGNED(4) gTilesetPalettes_Johto[][16] =
+{
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/00.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/01.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/02.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/03.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/04.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/05.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/06.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/07.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/08.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/09.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/10.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/11.pal", ".gbapal"),
+    INCGFX_U16("data/tilesets/secondary/johto/palettes/12.pal", ".gbapal"),
+};

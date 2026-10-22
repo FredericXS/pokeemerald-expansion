@@ -7,7 +7,8 @@ For the Johto expedition test ROM, build with
 `make -j5 -O all BUILD_NAME=generations-progression GENERATIONS_TEST_ROM=1`
 and open `pokegenerations-progression.gba`. It adds a progression assistant,
 first-entry team transfer with full-PC protection, three Johto starter
-reservations, New Bark, healing and a Route 29 encounter area.
+reservations, HGSS-based New Bark and Route 29 maps, distinct interiors,
+community building graphics and healing at the player’s home.
 See [controls, transfer rules and validation](docs/generations/JOHTO_TEST_ROM.md).
 
 # About `pokeemerald-expansion`

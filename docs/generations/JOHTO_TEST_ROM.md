@@ -1,9 +1,19 @@
 # Johto progression test ROM
 
 Based on commit `3936a86c6d038924f4f79768ac495ab075534e0f`.
-This milestone adds a small playable Johto expedition, using existing FRLG
-art and geometry. New Bark and Route 29 are prototype layouts, not a
-recreation of their Gold/Silver maps or a complete Johto campaign.
+This milestone adds a playable Johto expedition. New Bark (32×32) and
+Route 29 (96×32) adapt HeartGold/SoulSilver terrain, door coordinates and
+west/east connections to the GBA engine. The lab, player’s home, southwest
+house, rival’s home, upstairs study and Route 46 gate have separate interiors.
+Community HGSS building graphics and original wind turbines distinguish the
+town from Pallet. This remains the first area, not a complete Johto campaign.
+
+Sources, artwork credits and regeneration instructions are in
+[Johto map credits](../../graphics/johto/CREDITS.md).
+
+![HGSS-based New Bark map](../../graphics/johto/previews/NewBarkTown.png)
+
+[View the complete Route 29 map](../../graphics/johto/previews/JohtoRoute29.png).
 
 ## Build and play
 
@@ -35,10 +45,12 @@ Emerald/FRLG save. The file name keeps test saves separate from the regular
    level-5 Johto starter becomes the only party member. Arrival is inside
    Elm's lab. Lab ball displays explain the reservations; they do not
    award additional starters. Elm supplies five Poké Balls, repeatably.
-4. Leave the lab and walk north to the Route 29 test area. Its grass has
-   level 2–4 Sentret, Hoothoot, Pidgey and Rattata. The western house in
-   New Bark provides healing, a PC and the local blackout/Teleport return
-   point. Other Johto routes and gyms are outside this milestone.
+4. Leave the lab and walk west to Route 29. Its grass has
+   level 2–4 Sentret, Hoothoot, Pidgey and Rattata. The player’s home in
+   northeast New Bark provides healing from Mom, a PC and the local
+   blackout/Teleport return point. The western Cherrygrove exit and northern
+   Route 46 passage are visibly closed; other routes and gyms are outside
+   this milestone.
 5. The scientist in New Bark offers the four-Johto-badge shortcut. This
    opens the PC and the sailor's return passage. Kanto and Johto badge
    histories are separate and restored on travel. Fly is disabled in Johto
@@ -90,24 +102,26 @@ make -j5 -O check BUILD_NAME=generations-progression GENERATIONS_TEST_ROM=1 TEST
 make -j5 -O check BUILD_NAME=generations-progression GENERATIONS_TEST_ROM=1 TESTS="Spikes"
 ```
 
-The focused runs pass 23 regional tests, 4 save-layout tests and 4 Spikes
+The focused runs pass 26 regional tests, 4 save-layout tests and 4 Spikes
 tests. Regional cases include all three starters through the real script
 interpreter; PC full and insufficient capacity; a six-member transfer
 across boxes; exact boxed data and unrelated slot preservation; eggs,
 items, PP, HP and status; rollback after writes 1, 3 and 6; rejected mail,
 fusions, bad checksums, empty teams, invalid starters, locked progress and
 unknown schemas; duplicate calls, return and revisit; regional badge
-restoration; saved-party/save-block reload; and linked destination maps.
+restoration; saved-party/save-block reload; linked HGSS destination maps, one-time relocation of legacy Johto saves,
+and the new home’s respawn coordinates.
 The runner reports parametrized scenarios under their parent test count.
 
-The test ROM occupies 26,970,532 bytes of ROM (80.38%) and is padded to
+The test ROM occupies 26,991,548 bytes of ROM (80.44%) and is padded to
 32 MiB. EWRAM remains 226,704 bytes and IWRAM 28,648 bytes. Transfer staging
 uses the existing heap, without enlarging any saved structure.
 
 The broad suite run completed with 5,439 passed, 18 known failing, 9 expected
 failing and 421 TODO (5,887 total), exit status 0 and no unexpected failures.
 It preceded the final Fly/Box Link/encounter-table/vacancy hardening changes;
-the focused 31-test runs above were repeated against the final sources.
+the original focused 31-test runs were repeated against that milestone.
+For the HGSS map revision, all 34 focused tests pass.
 This distinction avoids treating the broad run as final coverage of those
 last changes.
 
@@ -129,5 +143,32 @@ matched, schema was `0x4701`, and region was Johto. Walking in the grass
 started a level-3 Sentret encounter. These checks are distinct from the
 unit save-block reload and do not simulate power loss during flash writes.
 
-Final ROM SHA-256:
-`f92da43aa6192b503499dff44d5803cf1078011267c9baed643f286876822789`.
+The smoke tests above describe the previous map revision. With the HGSS
+revision, mGBA also loaded that real flash save from the old vertical Route 29
+and relocated the player to (93,14) on the new horizontal route. All 600
+party bytes and the transferred 80-byte boxed Pokémon still matched. Walking
+then crossed the west/east map connection into New Bark and entered Elm’s
+new lab through its HGSS-positioned door, then reached and entered the
+player’s northeast home through its separate entrance.
+
+Old Johto saves are relocated once before loading map objects; map IDs,
+party/storage layout and schema remain unchanged. Keep a backup when
+updating. New saves retain their exact position on subsequent loads.
+
+Map validation and optional regeneration:
+
+```sh
+python3 tools/generations_maps/validate.py
+# Pillow is needed only for regeneration/checking graphics:
+python3 tools/generations_maps/generate.py --check
+python3 tools/generations_maps/generate.py --preview /tmp/johto-maps
+```
+
+The validator checks reciprocal connections, all five town doors and their
+return warps, NPC reachability, both directions of the route’s ledges, the
+gate approach, closed unfinished exits and GBA tile budgets. The build
+Action runs this validator before compiling. Every artifact includes its
+own SHA-256 checksum.
+
+HGSS revision ROM SHA-256:
+`7af076978a61f54ce11a108f17af71ad80fa52cee87b6226e881b7a9136cbe19`.

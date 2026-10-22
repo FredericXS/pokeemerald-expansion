@@ -9,6 +9,8 @@
 #include "load_save.h"
 #include "party_menu.h"
 #include "wild_encounter.h"
+#include "tilesets.h"
+#include "heal_location.h"
 #include "constants/maps.h"
 #include "constants/heal_locations.h"
 #include "test/test.h"
@@ -276,8 +278,29 @@ TEST("Generations travel: Johto maps are linked with reciprocal routes and safe 
     const struct MapHeader *lab = Overworld_GetMapHeaderByGroupAndId(MAP_GROUP(MAP_NEW_BARK_TOWN_ELMS_LAB), MAP_NUM(MAP_NEW_BARK_TOWN_ELMS_LAB));
     EXPECT_EQ(town->regionMapSectionId, MAPSEC_NEW_BARK_TOWN);
     EXPECT_EQ(route->regionMapSectionId, MAPSEC_JOHTO_ROUTE_29);
+    EXPECT_EQ(town->mapLayout->width, 32);
+    EXPECT_EQ(town->mapLayout->height, 32);
+    EXPECT_EQ(route->mapLayout->width, 96);
+    EXPECT_EQ(route->mapLayout->height, 32);
+    EXPECT(town->mapLayout->secondaryTileset == &gTileset_Johto);
+    EXPECT(route->mapLayout->secondaryTileset == &gTileset_Johto);
+    EXPECT_EQ(town->events->warpCount, 5);
+    EXPECT_EQ(town->events->warps[0].x, 23);
+    EXPECT_EQ(town->events->warps[0].y, 12);
+    EXPECT_EQ(town->events->warps[1].x, 12);
+    EXPECT_EQ(town->events->warps[1].y, 9);
+    EXPECT_EQ(town->events->warps[2].x, 7);
+    EXPECT_EQ(town->events->warps[2].y, 21);
+    EXPECT_EQ(town->events->warps[3].x, 18);
+    EXPECT_EQ(town->events->warps[3].y, 23);
+    EXPECT_EQ(town->events->warps[4].x, 16);
+    EXPECT_EQ(town->events->warps[4].y, 8);
     EXPECT_EQ(town->connections->count, 1);
     EXPECT_EQ(route->connections->count, 1);
+    EXPECT_EQ(town->connections->connections[0].direction, CONNECTION_WEST);
+    EXPECT_EQ(route->connections->connections[0].direction, CONNECTION_EAST);
+    EXPECT_EQ(town->connections->connections[0].offset, 0);
+    EXPECT_EQ(route->connections->connections[0].offset, 0);
     EXPECT_EQ(town->connections->connections[0].mapGroup, MAP_GROUP(MAP_JOHTO_ROUTE29));
     EXPECT_EQ(route->connections->connections[0].mapNum, MAP_NUM(MAP_NEW_BARK_TOWN));
     EXPECT_EQ(lab->events->warps[0].mapGroup, MAP_GROUP(MAP_NEW_BARK_TOWN));
@@ -306,4 +329,71 @@ TEST("Generations travel: Route 29 has live Johto encounters in the selected gam
     }
     EXPECT(sentret && hoothoot);
     gSaveBlock1Ptr->location = old;
+}
+
+TEST("Generations travel: old Johto map saves relocate once without touching Pokemon")
+{
+    u32 map;
+    s16 x, y;
+    PARAMETRIZE { map = MAP_NEW_BARK_TOWN; x = 14; y = 14; }
+    PARAMETRIZE { map = MAP_JOHTO_ROUTE29; x = 93; y = 14; }
+    PARAMETRIZE { map = MAP_NEW_BARK_TOWN_ELMS_LAB; x = 6; y = 10; }
+    PARAMETRIZE { map = MAP_NEW_BARK_TOWN_HEALING_HOUSE; x = 6; y = 6; }
+    PrepareTravel(6);
+    EXPECT_EQ(Generations_EnterJohto(SPECIES_TOTODILE), GENERATIONS_TRAVEL_OK);
+    u32 oldState = Generations_GetRegionState(REGION_JOHTO) & ~REGION_PROGRESS_HGSS_MAPS;
+    VarSet(VAR_GENERATIONS_KANTO + 1, oldState);
+    gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(map);
+    gSaveBlock1Ptr->location.mapNum = MAP_NUM(map);
+    gSaveBlock1Ptr->pos.x = 12;
+    gSaveBlock1Ptr->pos.y = 35; // Old vertical Route 1 geometry.
+    struct TravelSnapshot *s = Snapshot();
+    EXPECT(s != NULL);
+    EXPECT(Generations_RelocateLegacyJohtoSave());
+    EXPECT_EQ(gSaveBlock1Ptr->pos.x, x);
+    EXPECT_EQ(gSaveBlock1Ptr->pos.y, y);
+    EXPECT_EQ(gSaveBlock1Ptr->location.mapGroup, MAP_GROUP(map));
+    EXPECT_EQ(gSaveBlock1Ptr->location.mapNum, MAP_NUM(map));
+    EXPECT_EQ(Generations_GetRegionState(REGION_JOHTO), oldState | REGION_PROGRESS_HGSS_MAPS);
+    EXPECT_EQ(memcmp(s->party, gParties[B_TRAINER_PLAYER], sizeof(s->party)), 0);
+    EXPECT_EQ(memcmp(&s->storage, gPokemonStoragePtr, sizeof(s->storage)), 0);
+    Free(s);
+    s = Snapshot();
+    EXPECT(s != NULL);
+    EXPECT(!Generations_RelocateLegacyJohtoSave());
+    ExpectUnchanged(s);
+}
+
+TEST("Generations travel: relocation never migrates Kanto or an unknown save schema")
+{
+    bool32 corrupt;
+    PARAMETRIZE { corrupt = FALSE; }
+    PARAMETRIZE { corrupt = TRUE; }
+    PrepareTravel(1);
+    if (corrupt)
+    {
+        EXPECT_EQ(Generations_EnterJohto(SPECIES_TOTODILE), GENERATIONS_TRAVEL_OK);
+        VarSet(VAR_GENERATIONS_SCHEMA, 0xFFFF);
+    }
+    gSaveBlock1Ptr->location.mapGroup = MAP_GROUP(MAP_JOHTO_ROUTE29);
+    gSaveBlock1Ptr->location.mapNum = MAP_NUM(MAP_JOHTO_ROUTE29);
+    struct TravelSnapshot *s = Snapshot();
+    EXPECT(s != NULL);
+    EXPECT(!Generations_RelocateLegacyJohtoSave());
+    ExpectUnchanged(s);
+}
+
+TEST("Generations travel: Johto blackout returns to the local house and healer")
+{
+    PrepareTravel(1);
+    EXPECT_EQ(Generations_EnterJohto(SPECIES_CHIKORITA), GENERATIONS_TRAVEL_OK);
+    struct WarpData warp;
+    SetWhiteoutRespawnWarpAndHealerNPC(&warp);
+    EXPECT_EQ(warp.mapGroup, MAP_GROUP(MAP_NEW_BARK_TOWN_HEALING_HOUSE));
+    EXPECT_EQ(warp.mapNum, MAP_NUM(MAP_NEW_BARK_TOWN_HEALING_HOUSE));
+    EXPECT_EQ(warp.x, 5);
+    EXPECT_EQ(warp.y, 5);
+    const struct HealLocation *heal = GetHealLocation(HEAL_LOCATION_NEW_BARK_TOWN);
+    EXPECT_EQ(heal->x, 23);
+    EXPECT_EQ(heal->y, 13);
 }

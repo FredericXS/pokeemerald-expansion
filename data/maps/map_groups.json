@@ -1166,6 +1166,10 @@
     "NewBarkTown",
     "NewBarkTown_ElmsLab",
     "NewBarkTown_HealingHouse",
-    "JohtoRoute29"
+    "JohtoRoute29",
+    "NewBarkTown_SouthwestHouse",
+    "NewBarkTown_RivalHouse",
+    "NewBarkTown_ElmsStudy",
+    "JohtoRoute29_Gatehouse"
   ]
 }

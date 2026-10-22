@@ -1,5 +1,6 @@
 @ Fixed destinations only. The selected starter is staged before any deposit.
 Generations_OnJohtoMap::
+	special Generations_OnJohtoMapLoaded
 	setrespawn HEAL_LOCATION_NEW_BARK_TOWN
 	end
 
@@ -171,8 +172,8 @@ Generations_Text_PCLocked::
 Generations_Text_Elm::
 	.string "ELM: Welcome to NEW BARK TOWN!\n"
 	.string "Your reserved partner is with you.\p"
-	.string "The northern path is our ROUTE 29\n"
-	.string "test area. Try catching a SENTRET!\p"
+	.string "The western path is ROUTE 29.\n"
+	.string "Try catching a SENTRET there!\p"
 	.string "Take five POKé BALLS. Come back\n"
 	.string "for more while testing.$"
 Generations_Text_BallChikorita::
@@ -189,14 +190,91 @@ Generations_Text_BallTotodile::
 	.string "One JOHTO starter per adventure.$"
 Generations_Text_Town::
 	.string "NEW BARK TOWN - JOHTO expedition\n"
-	.string "North: ROUTE 29 test area\p"
-	.string "West house: healing and PC\n"
-	.string "Southeast: ELM's laboratory$"
+	.string "West: ROUTE 29 to CHERRYGROVE\p"
+	.string "East house: healing and PC\n"
+	.string "Northwest: ELM's laboratory$"
 Generations_Text_Route::
 	.string "ROUTE 29 - NEW BARK test area\n"
 	.string "The rest of JOHTO is not open yet.$"
 Generations_Text_Guide::
 	.string "SENTRET and HOOTHOOT live here!\n"
-	.string "Heal at the west house in town.\p"
+	.string "Heal at the east house in town.\p"
 	.string "The scientist in NEW BARK provides\n"
 	.string "the TEST ROM's four-badge shortcut.$"
+
+Generations_EventScript_Mom::
+    lock
+    faceplayer
+    msgbox Generations_Text_HomeHeal, MSGBOX_DEFAULT
+    call Common_EventScript_OutOfCenterPartyHeal
+    msgbox Generations_Text_HomeRested, MSGBOX_DEFAULT
+    release
+    end
+Generations_EventScript_AfterWhiteout::
+    lockall
+    special HealPlayerParty
+    msgbox Generations_Text_HomeRested, MSGBOX_DEFAULT
+    releaseall
+    end
+Generations_EventScript_TownResident::
+    msgbox Generations_Text_HGSSNewBark, MSGBOX_NPC
+    end
+Generations_EventScript_HouseResident::
+    msgbox Generations_Text_House, MSGBOX_NPC
+    end
+Generations_EventScript_ResearchNotes::
+    msgbox Generations_Text_Research, MSGBOX_SIGN
+    end
+Generations_EventScript_LabSign::
+    msgbox Generations_Text_Lab, MSGBOX_SIGN
+    end
+Generations_EventScript_RivalHouseSign::
+    msgbox Generations_Text_RivalHouse, MSGBOX_SIGN
+    end
+Generations_EventScript_RouteWestGuide::
+    msgbox Generations_Text_WestBoundary, MSGBOX_NPC
+    end
+Generations_EventScript_WestBoundary::
+    msgbox Generations_Text_WestBoundary, MSGBOX_SIGN
+    end
+Generations_EventScript_Gatekeeper::
+    msgbox Generations_Text_Route46, MSGBOX_NPC
+    end
+Generations_EventScript_Route46Sign::
+    msgbox Generations_Text_Route46, MSGBOX_SIGN
+    end
+Generations_Text_HomeHeal::
+    .string "Welcome home! Let your POKéMON\n"
+    .string "rest here before you explore JOHTO.$"
+Generations_Text_HomeRested::
+    .string "Your POKéMON are feeling better.\n"
+    .string "Take care on ROUTE 29!$"
+Generations_Text_HGSSNewBark::
+    .string "NEW BARK TOWN, where winds of a\n"
+    .string "new beginning blow.\p"
+    .string "ROUTE 29 lies west. The eastern\n"
+    .string "shore leads toward ROUTE 27.$"
+Generations_Text_House::
+    .string "The houses and ELM's lab have been\n"
+    .string "rebuilt for this JOHTO expedition.\p"
+    .string "Travel west through the ledges and\n"
+    .string "grass of ROUTE 29.$"
+Generations_Text_Research::
+    .string "ELM's research: POKéMON, their\n"
+    .string "habitats and their evolution.\p"
+    .string "The study is reached by the stairs\n"
+    .string "outside the laboratory.$"
+Generations_Text_Lab::
+    .string "ELM POKéMON LAB\n"
+    .string "Research on POKéMON and evolution.$"
+Generations_Text_RivalHouse::
+    .string "NEW BARK TOWN\n"
+    .string "A neighbor's house.$"
+Generations_Text_WestBoundary::
+    .string "CHERRYGROVE CITY lies farther west.\p"
+    .string "That area is still being built.\n"
+    .string "You can explore ROUTE 29 here.$"
+Generations_Text_Route46::
+    .string "ROUTE 46 is north of this gate.\p"
+    .string "Construction has closed that exit.\n"
+    .string "The south door returns to ROUTE 29.$"

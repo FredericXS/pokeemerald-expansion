@@ -25,6 +25,9 @@ jobs:
             build-essential binutils-arm-none-eabi gcc-arm-none-eabi \
             libnewlib-arm-none-eabi libpng-dev python3
 
+      - name: Validate HGSS map geography and walking paths
+        run: python3 tools/generations_maps/validate.py
+
       - name: Build ROM with progression shortcuts enabled
         run: make -j"$(nproc)" -O all BUILD_NAME=generations-progression GENERATIONS_TEST_ROM=1
 

@@ -2,7 +2,8 @@
 
 The next milestone is now available: [Johto progression test ROM](JOHTO_TEST_ROM.md).
 It adds transport, atomic first-entry party deposit, starter reservations,
-New Bark, a Route 29 test area, healing and test-only progress shortcuts.
+HGSS-based New Bark and Route 29 maps, distinct interiors, healing and
+test-only progress shortcuts. Existing Johto saves migrate to safe map positions.
 The foundation validation record below describes the original Kanto baseline.
 
 ## Scope
