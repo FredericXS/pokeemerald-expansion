@@ -9,7 +9,12 @@ Community HGSS building graphics and original wind turbines distinguish the
 town from Pallet. This remains the first area, not a complete Johto campaign.
 
 Sources, artwork credits and regeneration instructions are in
-[Johto map credits](../../graphics/johto/CREDITS.md).
+[Johto map credits](../../graphics/johto/CREDITS.md). The detailed Portuguese
+reconstruction specification for all ten Johto cities and Routes 29–48 is
+[JOHTO_HGSS_REFERENCIA_TILES.txt](JOHTO_HGSS_REFERENCIA_TILES.txt): 33 areas,
+98 original sectors, door/object coordinates, full terrain attribute grids
+and 399 static scenery/building instances with their original transforms.
+It includes Lake of Rage, Safari Zone Gate and Route 28 as a Mt. Silver link.
 
 ![HGSS-based New Bark map](../../graphics/johto/previews/NewBarkTown.png)
 
@@ -35,9 +40,11 @@ Emerald/FRLG save. The file name keeps test saves separate from the regular
 `pokegenerations.gba` build. No base ROM is required.
 
 1. The scientist in the Pallet bedroom offers the Kanto progression
-   shortcut: eight badges, League and Champion. Confirm explicitly; it
-   changes saved progress. It leaves Oak's introductory quest intact:
-   obtain a Kanto starter normally before departing.
+   shortcut: eight badges, League and Champion, applied immediately when
+   talking. It also gives one shiny level-30 Mew (Timid, all six IVs 31;
+   Psychic, Aura Sphere, Thunderbolt, Roost). Oak’s introduction remains
+   available; his starter nickname prompt targets the new starter even
+   with Mew already in the party.
 2. Talk to the sailor near Pallet's central sign. Confirm the expedition,
    then choose Chikorita, Cyndaquil or Totodile through the reservation
    questions. Declining all three cancels without moving anything.
@@ -51,15 +58,24 @@ Emerald/FRLG save. The file name keeps test saves separate from the regular
    blackout/Teleport return point. The western Cherrygrove exit and northern
    Route 46 passage are visibly closed; other routes and gyms are outside
    this milestone.
-5. The scientist in New Bark offers the four-Johto-badge shortcut. This
-   opens the PC and the sailor's return passage. Kanto and Johto badge
+5. Talking to the scientist in New Bark applies the four-Johto-badge
+   shortcut and gives one shiny level-30 Celebi (Modest, all IVs 31; Psychic,
+   Giga Drain, Ancient Power, Recover). This opens the PC and the sailor’s
+   return passage. Kanto and Johto badge
    histories are separate and restored on travel. Fly is disabled in Johto
    until a regional Fly map exists; Teleport and blackouts stay local.
    Return visits keep the
    current party and never award/deposit another starter; the reservation
    answer on a revisit is ignored.
 
-Without `GENERATIONS_TEST_ROM=1`, the scientists cannot alter progression.
+Each scientist gift is awarded once per region, tracked in existing saved
+progression bits. If the party is full, progress unlocks and the gift waits
+for a free party slot; talk again after making room. Gifts never replace a
+party member or silently use the PC. Old saves that already used the
+progress shortcut remain eligible for their new gift.
+
+Without `GENERATIONS_TEST_ROM=1`, scientists give no gifts and cannot alter
+progression.
 Use a distinct `BUILD_NAME` for each flag configuration; Make does not
 track changes to command-line compiler flags as dependencies.
 
@@ -102,7 +118,7 @@ make -j5 -O check BUILD_NAME=generations-progression GENERATIONS_TEST_ROM=1 TEST
 make -j5 -O check BUILD_NAME=generations-progression GENERATIONS_TEST_ROM=1 TESTS="Spikes"
 ```
 
-The focused runs pass 26 regional tests, 4 save-layout tests and 4 Spikes
+The focused runs pass 29 regional tests, 4 save-layout tests and 4 Spikes
 tests. Regional cases include all three starters through the real script
 interpreter; PC full and insufficient capacity; a six-member transfer
 across boxes; exact boxed data and unrelated slot preservation; eggs,
@@ -110,10 +126,12 @@ items, PP, HP and status; rollback after writes 1, 3 and 6; rejected mail,
 fusions, bad checksums, empty teams, invalid starters, locked progress and
 unknown schemas; duplicate calls, return and revisit; regional badge
 restoration; saved-party/save-block reload; linked HGSS destination maps, one-time relocation of legacy Johto saves,
-and the new home’s respawn coordinates.
+the new home’s respawn coordinates, both shiny mythical gifts, IVs/nature/
+level/moves, repeat-call preservation and a pending gift with full party/PC, and receiving Mew before Oak without
+losing the starter marker or selecting Mew in the starter nickname prompt.
 The runner reports parametrized scenarios under their parent test count.
 
-The test ROM occupies 26,991,548 bytes of ROM (80.44%) and is padded to
+The test ROM occupies 26,991,724 bytes of ROM (80.44%) and is padded to
 32 MiB. EWRAM remains 226,704 bytes and IWRAM 28,648 bytes. Transfer staging
 uses the existing heap, without enlarging any saved structure.
 
@@ -121,7 +139,7 @@ The broad suite run completed with 5,439 passed, 18 known failing, 9 expected
 failing and 421 TODO (5,887 total), exit status 0 and no unexpected failures.
 It preceded the final Fly/Box Link/encounter-table/vacancy hardening changes;
 the original focused 31-test runs were repeated against that milestone.
-For the HGSS map revision, all 34 focused tests pass.
+For the current map/gift revision, all 37 focused tests pass.
 This distinction avoids treating the broad run as final coverage of those
 last changes.
 
@@ -166,9 +184,45 @@ python3 tools/generations_maps/generate.py --preview /tmp/johto-maps
 
 The validator checks reciprocal connections, all five town doors and their
 return warps, NPC reachability, both directions of the route’s ledges, the
-gate approach, closed unfinished exits and GBA tile budgets. The build
+gate approach, closed unfinished exits, complete trees, interior NPC/PC
+access and GBA tile budgets. The build
 Action runs this validator before compiling. Every artifact includes its
 own SHA-256 checksum.
 
-HGSS revision ROM SHA-256:
-`7af076978a61f54ce11a108f17af71ad80fa52cee87b6226e881b7a9136cbe19`.
+Current map/gift revision ROM SHA-256:
+`a8c367a953aa7ba17c2ed5e057648a97f605648af05ec184b3bdae20d3dcb81d`.
+
+The visual cleanup removes disconnected neighboring sprite fragments and
+flat gray shadow rectangles from the community crops, aligns Elm’s doorway
+with its facade opening, reuses the painted exterior stairs, separates open
+water from shoreline tiles, completes forest-edge trees and repairs paired
+bookshelf/table pieces. The route gate has service desks, not a kitchen.
+The validator checks all six interiors and their interaction approaches.
+
+Regenerate the complete research text from its pinned external source checkout:
+
+```sh
+python3 tools/generations_maps/export_hgss_reference.py /path/to/pokeheartgold
+```
+
+The text distinguishes exact source data from artistic reconstruction notes.
+It does not claim that collision attributes identify every DS texture, or
+that the documented future areas are already playable.
+
+A further mGBA 0.10.5 run loaded the old Route 29 flash save, verified all
+600 party bytes and the transferred boxed Pokémon before the gift, walked
+to the Johto scientist and received level-30 Celebi. The starter and boxed
+Pokémon remained byte-for-byte identical. After walking into the repaired
+lab, the in-game Save command wrote a new 128 KiB flash image. A new emulator
+process using the final ROM continued at the exact saved lab position (6,6),
+with all 600 party bytes and the boxed Pokémon matching. Walking back and
+talking to the scientist did not duplicate Celebi. These were real button
+interactions and flash-save reloads, not injected gift results.
+
+Visual smoke captures: [repaired coastline](../../graphics/johto/previews/ShorelineInGame.png)
+and [Elm’s lab](../../graphics/johto/previews/ElmLabInGame.png).
+
+The final ROM was also checked with the earlier untouched flash slot recovered
+into a separate legacy-save fixture: Continue relocated the old vertical-route
+position, and one scientist interaction immediately awarded level-30 Celebi
+while preserving the original starter and boxed Pokémon.

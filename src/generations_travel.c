@@ -200,6 +200,41 @@ void Generations_CheckPC(void)
     gSpecialVar_Result = Generations_CanUsePC();
 }
 
+#if GENERATIONS_TEST_ROM
+static void GiveTestShortcutGift(enum Region region)
+{
+    u32 state = Generations_GetRegionState(region);
+    if (state & REGION_PROGRESS_TEST_GIFT)
+        return;
+    u32 slot = gPartiesCount[B_TRAINER_PLAYER];
+    // Gifts go directly to a free party slot, never overwrite or silently use
+    // the region-locked PC. Progress still unlocks if the gift must wait.
+    if (slot >= PARTY_SIZE || GetMonData(&gParties[B_TRAINER_PLAYER][slot], MON_DATA_SPECIES) != SPECIES_NONE)
+    {
+        gSpecialVar_Result = 4;
+        return;
+    }
+    enum Species species = region == REGION_KANTO ? SPECIES_MEW : SPECIES_CELEBI;
+    u32 personality = GetMonPersonality(species, MON_GENDERLESS, region == REGION_KANTO ? NATURE_TIMID : NATURE_MODEST, 0);
+    struct Pokemon gift;
+    bool32 shiny = TRUE;
+    CreateMonWithIVs(&gift, species, 30, personality, OTID_STRUCT_PLAYER_ID, 31);
+    GiveMonInitialMoveset(&gift);
+    SetMonData(&gift, MON_DATA_IS_SHINY, &shiny);
+    SetMonMoveSlot(&gift, MOVE_PSYCHIC, 0);
+    SetMonMoveSlot(&gift, region == REGION_KANTO ? MOVE_AURA_SPHERE : MOVE_GIGA_DRAIN, 1);
+    SetMonMoveSlot(&gift, region == REGION_KANTO ? MOVE_THUNDERBOLT : MOVE_ANCIENT_POWER, 2);
+    SetMonMoveSlot(&gift, region == REGION_KANTO ? MOVE_ROOST : MOVE_RECOVER, 3);
+    gParties[B_TRAINER_PLAYER][slot] = gift;
+    gPartiesCount[B_TRAINER_PLAYER] = slot + 1;
+    FlagSet(FLAG_SYS_POKEMON_GET);
+    GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_SEEN);
+    GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_SET_CAUGHT);
+    VarSet(VAR_GENERATIONS_KANTO + (region == REGION_JOHTO), state | REGION_PROGRESS_TEST_GIFT);
+    gSpecialVar_Result = region == REGION_KANTO ? 2 : 3;
+}
+#endif
+
 void Generations_TestProgress(void)
 {
     gSpecialVar_Result = FALSE;
@@ -224,6 +259,7 @@ void Generations_TestProgress(void)
         return;
     RestoreBadgeFlags(region);
     gSpecialVar_Result = TRUE;
+    GiveTestShortcutGift(region);
 #endif
 }
 

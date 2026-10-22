@@ -134,7 +134,11 @@ bool32 Generations_RecordChampionVictory(enum Region region)
 
 void Generations_RecordStarter(void)
 {
-    enum Species species = GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES);
+    u32 count = gPartiesCount[B_TRAINER_PLAYER];
+    if (count == 0 || count > PARTY_SIZE)
+        return;
+    // Oak appends the received starter; the test gift may already be first.
+    enum Species species = GetMonData(&gParties[B_TRAINER_PLAYER][count - 1], MON_DATA_SPECIES);
     if (Generations_GetCurrentRegion() == REGION_KANTO
      && (species == SPECIES_BULBASAUR || species == SPECIES_CHARMANDER || species == SPECIES_SQUIRTLE))
         SetRegionState(REGION_KANTO, Generations_GetRegionState(REGION_KANTO) | REGION_PROGRESS_STARTER);

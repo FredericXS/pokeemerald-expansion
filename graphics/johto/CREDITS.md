@@ -29,7 +29,8 @@ The three `source/*.png` files are crops of
 `Buildings/Buildings_hgss_transparent.png`. Crop rectangles and the source
 sheet's SHA-256 are recorded in the reference JSON. The generator downsamples
 these doubled sprites to native resolution, removes the yellow background,
-recolors shadows and quantizes each facade into a GBA palette. The gate
+flat gray shadow and disconnected neighboring fragments, then quantizes
+each facade into a GBA palette. Door openings receive an aligned static door. The gate
 reuses the lab facade within the secondary tileset's 384-tile budget.
 The source repository supplies no license file; these credits do not assert
 a new license for its artwork. Pokémon artwork belongs to its respective
@@ -54,3 +55,8 @@ Normal ROM builds need neither Pillow nor downloads: generated exterior
 maps, palette files, metatiles and tile images are checked in. Interiors
 are edited as their own binary layouts. Validation uses only Python's
 standard library and runs in the test ROM build Action.
+
+The full Portuguese region specification is
+[JOHTO_HGSS_REFERENCIA_TILES.txt](../../docs/generations/JOHTO_HGSS_REFERENCIA_TILES.txt).
+Its exact terrain/event appendix can be regenerated with
+`tools/generations_maps/export_hgss_reference.py` and the pinned reference checkout.

@@ -21,13 +21,21 @@ class Grid:
         self.w=layout['width'];self.h=layout['height'];data=(ROOT/layout['blockdata_filepath']).read_bytes()
         check(len(data)==self.w*self.h*2,f'{name}: incorrect block count')
         self.blocks=struct.unpack('<'+'H'*(self.w*self.h),data)
+        self.primary=PRIMARY;self.secondary=SECONDARY
+        if layout['primary_tileset']=='gTileset_BuildingFrlg':
+            def attrs(path):
+                data=(ROOT/path/'metatile_attributes.bin').read_bytes()
+                return struct.unpack('<'+'I'*(len(data)//4),data)
+            self.primary=attrs(Path('data/tilesets/primary/building_frlg'))
+            secondary='lab_frlg' if layout['secondary_tileset']=='gTileset_Lab_Frlg' else 'generic_building_1_frlg'
+            self.secondary=attrs(Path('data/tilesets/secondary')/secondary)
         self.actors={(o['x'],o['y']) for o in self.map['object_events']}
     def block(self,p):
         x,y=p
         return self.blocks[y*self.w+x] if 0<=x<self.w and 0<=y<self.h else 0xfc00
     def behavior(self,p):
         mid=self.block(p)&1023
-        return (PRIMARY[mid] if mid<640 else SECONDARY[mid-640])&511
+        return (self.primary[mid] if mid<640 else self.secondary[mid-640])&511
     def walkable(self,p):return not self.block(p)&0xc00 and self.block(p)>>12!=1 and p not in self.actors
     def reach(self,start):
         check(self.walkable(start),f'{self.name}: invalid player start {start}')
@@ -74,7 +82,30 @@ def validate():
     check(sum(route.behavior((x,y))==2 for y in range(route.h) for x in range(route.w))>=300,'Route 29 encounter grass was lost')
     for grid in [town,route]:
         check(grid.map['layout'] not in ['LAYOUT_ROUTE1','LAYOUT_PALLET_TOWN'],'Kanto layout alias remains')
+    for grid in (town,route):
+        tree_ids={0x1c,0x1d,0x14,0x15}
+        for y in range(0,grid.h,2):
+            for x in range(0,grid.w,2):
+                group=[grid.block((x+dx,y+dy))&1023 in tree_ids for dx,dy in [(0,0),(1,0),(0,1),(1,1)]]
+                check(not any(group) or all(group),f'{grid.name}: orphan tree at {(x,y)}')
+        for y in range(grid.h):
+            for x in range(grid.w):
+                if grid.block((x,y))>>12==1:
+                    check(grid.block((x,y))&1023>=640,f'{grid.name}: old striped coast tile is used as water')
+                    check(grid.behavior((x,y))==0x15,f'{grid.name}: water lost its behavior')
+    rooms=['NewBarkTown_ElmsLab','NewBarkTown_HealingHouse','NewBarkTown_SouthwestHouse','NewBarkTown_RivalHouse','NewBarkTown_ElmsStudy','JohtoRoute29_Gatehouse']
+    for name in rooms:
+        grid=Grid(name);warp=grid.map['warp_events'][0]
+        reached=grid.reach((warp['x'],warp['y']))
+        for actor in grid.map['object_events']:
+            p=(actor['x'],actor['y'])
+            if actor['graphics_id']!='OBJ_EVENT_GFX_ITEM_BALL':
+                check(not grid.block(p)&0xc00,f'{name}: actor is inside furniture')
+            check(any((p[0]+dx,p[1]+dy) in reached for dx,dy in [(1,0),(-1,0),(0,1),(0,-1)]),f'{name}: actor is inaccessible')
+        for bg in grid.map['bg_events']:
+            p=(bg['x'],bg['y'])
+            check(any((p[0]+dx,p[1]+dy) in reached for dx,dy in [(1,0),(-1,0),(0,1),(0,-1)]),f'{name}: PC/research notes cannot be reached')
     check(len((ROOT/'data/tilesets/secondary/johto/metatiles.bin').read_bytes())<=384*16,'Secondary metatile budget exceeded')
-    print('PASS: HGSS geography, doors, reciprocal warps, NPC access, both walking directions, gate, shoreline, grass and tile budget')
+    print('PASS: HGSS geography, doors, reciprocal warps, NPC access, both walking directions, gate, shoreline, grass, complete trees, interior access and tile budget')
 
 if __name__=='__main__':validate()

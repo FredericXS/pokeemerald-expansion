@@ -80,7 +80,23 @@ for name, spec in REF['assets'].items():
             if (red, green, blue) == (255, 245, 104):
                 rgba.putpixel((x, y), (0, 0, 0, 0))
             elif (red, green, blue) == (180, 180, 188):
-                rgba.putpixel((x, y), (104, 153, 98, alpha))
+                rgba.putpixel((x, y), (0, 0, 0, 0))
+    # Crops from the packed sheet contain disconnected neighboring objects.
+    # Keep the facade's largest connected component after removing the shadow.
+    remaining = {(x,y) for y in range(rgba.height) for x in range(rgba.width) if rgba.getpixel((x,y))[3]}
+    components = []
+    while remaining:
+        component = {remaining.pop()}; queue = deque(component)
+        while queue:
+            x,y = queue.popleft()
+            for point in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
+                if point in remaining:
+                    remaining.remove(point); component.add(point); queue.append(point)
+        components.append(component)
+    facade = max(components, key=len)
+    for component in components:
+        if component is not facade:
+            for point in component: rgba.putpixel(point, (0,0,0,0))
     size = (math.ceil(rgba.width/16)*16, math.ceil(rgba.height/16)*16)
     padded = Image.new('RGBA', size); padded.paste(rgba, (0, 0))
     rgb = Image.new('RGB', size, (0, 0, 0)); rgb.paste(padded, mask=padded.getchannel('A'))
@@ -110,12 +126,32 @@ for name, spec in REF['assets'].items():
     # A custom nonanimated doorway avoids using Pallet's door-animation graphics.
     dx, dy = spec['door']
     door_art = indexed.crop((dx*16, dy*16, dx*16+16, dy*16+16))
+    # The RMXP sheet leaves openings for a separate door event. Fill only the
+    # doorway cell, aligned under its awning, rather than drawing below it.
     d = ImageDraw.Draw(door_art)
     dark = 1 + min(range(15), key=lambda i: sum(colors[i]))
-    d.rectangle((3, 2, 12, 15), fill=dark)
+    frame = 1 + min(range(15), key=lambda i: sum((colors[i][c]-120)**2 for c in range(3)))
+    d.rectangle((2,0,13,15),fill=frame)
+    d.rectangle((4,1,11,15),fill=dark)
     door_id = add_meta(door_art, spec['palette'], behavior=0x60)
     grid[dy][dx] = door_id
     assets[name] = {'grid': grid, 'door': spec['door'], 'width': size[0]//16, 'height': size[1]//16}
+
+# Open water and shoreline are different metatiles. A coast tile repeated
+# across the sea produces the vertical stripes seen in the reported screenshots.
+secondary_palettes[10] = [(0,0,0),(64,136,192),(80,152,208),(112,176,216)] + [(0,0,0)]*12
+water_metas = {}
+for edges in range(16):
+    art = Image.new('P',(16,16),1)
+    draw = ImageDraw.Draw(art)
+    for yy in (3,11):
+        draw.line((3,yy,6,yy),fill=2); draw.point((7,yy-1),fill=3)
+        draw.line((11,yy+2,14,yy+2),fill=2)
+    if edges & 1: draw.rectangle((0,0,2,15),fill=0);draw.line((3,0,3,15),fill=3)
+    if edges & 2: draw.rectangle((13,0,15,15),fill=0);draw.line((12,0,12,15),fill=3)
+    if edges & 4: draw.rectangle((0,0,15,2),fill=0);draw.line((0,3,15,3),fill=3)
+    if edges & 8: draw.rectangle((0,13,15,15),fill=0);draw.line((0,12,15,12),fill=3)
+    water_metas[edges] = add_meta(art,10,behavior=0x15)
 
 # Original small wind-turbine pixel art: an HGSS New Bark landmark, not a
 # character sprite or a Pallet decoration. All colors fit one GBA palette.
@@ -148,15 +184,20 @@ class Map:
                 if behavior == 6:
                     tile = ((0x1c,0x1d),(0x14,0x15))[y%2][x%2]
                 elif behavior == 2:
-                    tile = ((0x0a,0x0b),(0x0c,0x0d))[y%2][x%2]
+                    tile = 0x0b
                 elif behavior in (0x10,0x15):
-                    tile = 0x204; blocked = False
+                    def water(xx,yy):
+                        return not (0 <= xx < self.w and 0 <= yy < self.h) or terrain[yy][xx]&255 in (0x10,0x15)
+                    edges = (not water(x-1,y)) | ((not water(x+1,y)) << 1) | ((not water(x,y-1)) << 2) | ((not water(x,y+1)) << 3)
+                    tile = water_metas[edges]; blocked = False
                 elif behavior == 0x38:
                     tile = 0x8c
                 elif behavior == 0x39:
                     tile = 0x8b
-                elif behavior in (0x3b,0x3e):
+                elif behavior == 0x3b:
                     tile = 0x8f
+                elif behavior in (0x3c,0x3d,0x3e):
+                    tile = 0x91; blocked = False
                 elif attr == 0x400:
                     # Autotile the soil roads from the HGSS walking-surface mask.
                     def road(xx, yy):
@@ -175,6 +216,11 @@ class Map:
             self.blocks[y][x] = tile | (0xc00 if blocked else 0) | (elevation << 12)
     def stamp(self,asset,door):
         a = assets[asset]; dx,dy = a['door']; ox,oy = door[0]-dx,door[1]-dy
+        # Clear a complete footprint and its breathing space, including the
+        # transparent roof corners. Trees must not cut through the facade.
+        for yy in range(max(0,oy-1),min(self.h,oy+a['height']+1)):
+            for xx in range(max(0,ox-1),min(self.w,ox+a['width']+1)):
+                self.set(xx,yy,1)
         for y,row in enumerate(a['grid']):
             for x,tile in enumerate(row):
                 if tile is not None:
@@ -192,11 +238,12 @@ route = Map('JohtoRoute29', [decode('route29_west')[y]+decode('route29_middle')[
 for key, asset in [('lab','lab'),('player_home','house'),('southwest_home','cottage'),('rival_home','house')]:
     town.stamp(asset,REF['town_doors'][key])
 # The outside stairs lead to Elm's upstairs study, like the HGSS lab.
-stair_image = Image.new('P',(16,16));sd=ImageDraw.Draw(stair_image)
-for y in range(0,16,3):sd.rectangle((1,y,14,y+1),fill=2)
-stair_id = add_meta(stair_image,11,0x60)
-town.set(16,8,stair_id)
-town.set(16,9,add_meta(stair_image,11))
+# Preserve the stairs drawn into the facade, instead of stacking a second
+# staircase on top. The upper landing is a nonanimated warp.
+landing = town.blocks[8][16] & 1023
+metatiles.append(list(metatiles[landing-640])); attributes.append(0x60)
+town.set(16,8,640+len(metatiles)-1)
+town.blocks[9][16] &= ~0xc00
 town.set(16,10,0xd9)
 for x,y in [(4,10),(19,6),(3,27)]:
     for yy,row in enumerate(turbine_grid):
@@ -215,6 +262,16 @@ for y in range(12,19):route.set(0,y,0xe7,True)
 route.sign(3,13)
 for x,y in [(10,9),(21,12),(16,23)]:town.sign(x,y)
 for x,y in [(86,13),(50,8)]:route.sign(x,y)
+# A tree is a complete 2x2 object. Mask edges left behind by the DS collision
+# grid or a building footprint become single shrubs, never orphan quadrants.
+for map_ in (town,route):
+    tree_ids = {0x1c,0x1d,0x14,0x15}
+    for y in range(0,map_.h,2):
+        for x in range(0,map_.w,2):
+            cells=[(xx,yy) for yy in range(y,min(y+2,map_.h)) for xx in range(x,min(x+2,map_.w))]
+            if not all(map_.blocks[yy][xx]&1023 in tree_ids for xx,yy in cells):
+                for xx,yy in cells:
+                    if map_.blocks[yy][xx]&1023 in tree_ids:map_.set(xx,yy,5,True)
 town.save();route.save()
 
 if len(secondary_tiles) > 384:

@@ -22,6 +22,7 @@
 #define REGION_PROGRESS_LEGACY_PC    (1 << 12)
 #define REGION_PROGRESS_STARTER     (1 << 13)
 #define REGION_PROGRESS_HGSS_MAPS   (1 << 14)
+#define REGION_PROGRESS_TEST_GIFT   (1 << 15)
 
 struct Pokemon;
 struct BattlePokemon;

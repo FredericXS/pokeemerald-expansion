@@ -1131,7 +1131,8 @@ PalletTown_ProfessorOaksLab_EventScript_ChoseStarter::
 	end
 
 EventScript_GiveNicknameToStarter::
-	setvar VAR_0x8004, 0
+	@ The test scientist may already have given MEW. Name the new starter.
+	call Common_EventScript_GetGiftMonPartySlot
 	call Common_EventScript_NameReceivedPartyMon
 	goto PalletTown_ProfessorOaksLab_EventScript_RivalPicksStarter
 	end

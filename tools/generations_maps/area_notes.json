@@ -1,0 +1,219 @@
+{
+  "MAP_NEW_BARK": {
+    "name": "New Bark Town / Cidade de New Bark",
+    "notes": [
+      "Conexões: Rota 29 a oeste; Rota 27 a leste, através da água. O litoral fica no lado direito, não no topo. A passagem de Route 27 é uma etapa posterior da campanha.",
+      "Composição: laboratório de Elm a noroeste, casa do jogador a nordeste, casa menor a sudoeste e casa do rival a sudeste. Há acesso exterior separado ao andar de cima do laboratório.",
+      "Tiles: gramado verde baixo, caminhos ocres estreitos, árvores de limite em grupos completos, pequenos arbustos de acabamento e água azul com borda somente na linha da costa. Preservar os aerogeradores como marcos visuais.",
+      "Prédios: laboratório largo, telhado verde azulado e escada exterior à direita; casa do jogador com telhado avermelhado; residências menores não devem ser redimensionadas por repetição de janelas. A fachada termina no chão da porta, não uma célula acima.",
+      "Montagem: deixar respiro entre a copa das árvores, o telhado e a escada. Placas ficam ao lado dos acessos, nunca dentro da abertura. O centro permanece aberto; New Bark não é uma praça urbana pavimentada nem Pallet recolorida."
+    ]
+  },
+  "MAP_CHERRYGROVE": {
+    "name": "Cherrygrove City / Cidade de Cherrygrove",
+    "notes": [
+      "Conexões: Rota 29 a leste e Rota 30 ao norte. A costa e a pequena ilha acessível por Surf ocupam o lado oeste; não colocar o mar entre a cidade e a Rota 29.",
+      "Composição: pequeno núcleo residencial com Centro Pokémon, Poké Mart, casa do Guide Gent e outras casas. Usar as portas listadas abaixo para posicionar cada volume e identificar a função de cada prédio.",
+      "Tiles: caminhos de terra clara, gramado, faixa costeira, água aberta e ilha. Árvores emolduram os acessos terrestres; deixar a borda marítima legível e separada da rua.",
+      "Prédios: Centro Pokémon e Mart com identidade visual própria; residências de baixa densidade. O telhado vermelho identifica o Centro, mas não substitui o recorte da fachada e a porta correta.",
+      "Montagem: manter a área do passeio do Guide Gent conectada a pé; tratar a ilha como terra cercada de água, com todos os cantos de costa, sem uma coluna repetida de tile de praia."
+    ]
+  },
+  "MAP_VIOLET": {
+    "name": "Violet City / Cidade de Violet",
+    "notes": [
+      "Conexões: Rota 31 a leste, Rota 32 ao sul e Rota 36 a oeste. Sprout Tower ocupa a zona norte, separada por água e acessada pela passagem/ponte correspondente.",
+      "Composição: ginásio de Falkner, escola Pokémon, Centro, Mart, casas e acesso da torre. A torre é um volume vertical próprio; sua porta e o lago não devem ser trocados por uma casa comum.",
+      "Tiles: gramado, caminhos, pequenos lagos, margens de terra e ponte com entrada, meio e saída coerentes. A ponte precisa manter o piso contínuo e a água visível sob os lados.",
+      "Arquitetura: telhados e elementos tradicionais japoneses, base pétrea da torre e vegetação que enquadra as construções. Separar a silhueta da torre do conjunto de casas.",
+      "Montagem: reservar espaço de circulação entre escola, ginásio e serviços. A ligação à Rota 36 inclui o contexto do bloqueio de Sudowoodo; não criar uma saída sem retorno na primeira visita."
+    ]
+  },
+  "MAP_AZALEA": {
+    "name": "Azalea Town / Cidade de Azalea",
+    "notes": [
+      "Conexões: Rota 33 a leste e Ilex Forest a oeste. Slowpoke Well fica no setor leste; a oficina/casa de Kurt é um marco separado do ginásio de Bugsy.",
+      "Composição: casas rurais, oficina de Kurt, ginásio, Centro, Mart e poço. O poço usa aro, abertura e acesso próprios, não um tile genérico de caverna colado a uma casa.",
+      "Tiles: terra batida, gramado, bosque denso, árvores de Apricorn e pequena decoração rural. A transição oeste deve aumentar a densidade da floresta antes do portal de Ilex.",
+      "Montagem: manter a entrada do poço acessível a partir do caminho da Rota 33; separar seu patamar do corpo do ginásio. Reservar a clareira e a área de circulação da oficina sem colocar NPCs dentro da copa de árvores."
+    ]
+  },
+  "MAP_GOLDENROD": {
+    "name": "Goldenrod City / Cidade de Goldenrod",
+    "notes": [
+      "Conexões: Rota 34 ao sul e Rota 35 ao norte. É a maior malha urbana de Johto; as ruas e quarteirões precisam organizar o mapa antes de posicionar os prédios.",
+      "Composição: Radio Tower no setor oeste/noroeste, Department Store a leste, estação do Magnet Train no norte, ginásio no setor norte/leste, além de Game Corner, Bike Shop, Flower Shop e entradas do Underground.",
+      "Tiles: pavimento urbano, calçadas, esquinas, marcações e bordas de quarteirão; cercas e árvores apenas como acabamento. Evitar tapete de terra rural no centro comercial.",
+      "Volumes: torre de rádio alta, loja de departamentos com andares, estação com acesso próprio e grandes fachadas contínuas. Não montar prédios altos repetindo a mesma faixa de telhado em cada linha.",
+      "Underground: suas escadas são entradas independentes e não portas de residências. Preservar os dois acessos e a coerência dos retornos.",
+      "Montagem: garantir ruas transitáveis ao redor dos serviços, distinguir entradas públicas das paredes cegas e manter largura regular das calçadas. O trilho e a estação não podem terminar como decoração atravessável."
+    ]
+  },
+  "MAP_ECRUTEAK": {
+    "name": "Ecruteak City / Cidade de Ecruteak",
+    "notes": [
+      "Conexões: Rota 37 ao sul, Rota 38 a oeste e Rota 42 a leste. Burned Tower fica a noroeste; o caminho para Bell Tower parte do norte/nordeste.",
+      "Composição: ginásio de Morty, Dance Theater das Kimono Girls, serviços e casas tradicionais, ruína queimada e entrada do complexo religioso. Burned Tower e Bell Tower são dois locais distintos.",
+      "Tiles: ruas discretas, gramado, pedra nos acessos religiosos, madeira escura, telhados tradicionais e arborização de outono no caminho de Bell Tower.",
+      "Volumes: dar à torre queimada paredes danificadas e silhueta truncada; o portão do caminho sagrado não é uma fachada residencial. Manter a árvore/copa de outono fora dos vãos das entradas.",
+      "Montagem: conservar a estrutura de três saídas terrestres da cidade e corredores para os dois complexos ao norte. Não colocar o Dance Theater sobre o terreno de uma torre."
+    ]
+  },
+  "MAP_OLIVINE": {
+    "name": "Olivine City / Cidade de Olivine",
+    "notes": [
+      "Conexões: Rota 39 ao norte e Rota 40 a oeste. Lighthouse ocupa o litoral sudeste; o porto do S.S. Aqua é um acesso próprio ao sul.",
+      "Composição: ginásio de Jasmine, Centro, Mart, casas, farol e entrada do porto. A passagem para Battle Frontier ocorre pela área de Route 40, não pela porta do farol.",
+      "Tiles: ruas urbanas, borda costeira, água de porto, piso de cais e contenção de pedra. Mar aberto, canal do porto e solo da cidade são superfícies diferentes.",
+      "Volumes: farol alto e cilíndrico com base larga; armazéns/acessos portuários separados de residências. Não usar um prédio de laboratório como farol.",
+      "Montagem: distinguir o caminho do porto do acesso ao farol e preservar circulação junto ao litoral. Corrimões e barreiras do cais são bloqueados; não colocar a água como parede de faixa vertical repetida."
+    ]
+  },
+  "MAP_CIANWOOD": {
+    "name": "Cianwood City / Cidade de Cianwood",
+    "notes": [
+      "Conexões: Rota 41 pelo mar a leste; passagem para Cliff Edge Gate e Rota 47 pelo oeste. A cidade se apoia na praia entre o oceano e a encosta.",
+      "Composição: ginásio de Chuck, farmácia, Centro, casas e área ao norte associada a Suicune. A farmácia é um serviço específico; não presumir um Mart idêntico ao de outras cidades.",
+      "Tiles: areia, transição areia/gramado, costa, água aberta, rochas de praia e falésia a oeste. Usar quinas de areia para a praia, sem borda de gramado em todo o perímetro.",
+      "Montagem: a saída marítima não é estrada terrestre; a passagem para Safari Zone deve entrar numa caverna/portão antes dos penhascos da Rota 47. Deixar a faixa da praia contínua entre as fachadas e a água."
+    ]
+  },
+  "MAP_MAHOGANY": {
+    "name": "Mahogany Town / Cidade de Mahogany",
+    "notes": [
+      "Conexões: Rota 42 a oeste, Rota 43 ao norte e Rota 44 a leste. É uma vila pequena no corredor entre montanhas.",
+      "Composição: ginásio de Pryce, Centro, casas e loja de lembranças sobre o esconderijo da Team Rocket. A loja possui função e acesso de história diferentes de um Mart comum.",
+      "Tiles: caminhos estreitos, gramado, árvores e bordas de terreno alto. Reservar os três corredores de entrada antes de preencher as extremidades com vegetação.",
+      "Montagem: a passagem da loja para o esconderijo precisa ser interna e condicionada aos eventos; não abrir um buraco permanente na rua. Distinguir a rota norte, que sobe para o lago, da rota leste, que segue a Ice Path."
+    ]
+  },
+  "MAP_BLACKTHORN": {
+    "name": "Blackthorn City / Cidade de Blackthorn",
+    "notes": [
+      "Conexões: Ice Path a nordeste, Rota 45 ao sul e Dragon's Den atrás do ginásio, ao norte, através da água.",
+      "Composição: ginásio de Clair junto ao lago setentrional, entrada de Dragon's Den na parede rochosa, serviços, casas e casa dos tutores/reaprendedor de movimentos.",
+      "Tiles: rocha de montanha, patamares, escadas, lago de água doce, margens de pedra e caminhos de terra. A diferença de altura exige faces verticais de falésia e piso no topo.",
+      "Montagem: conservar um acesso terrestre ao ginásio e a separação por água até Dragon's Den. A saída sul deve se encaixar no início do sistema de descidas da Rota 45; não fazer uma estrada plana onde há desnível."
+    ]
+  },
+  "MAP_LAKE_OF_RAGE": {
+    "name": "Lake of Rage / Lago da Fúria",
+    "notes": [
+      "Conexão principal: Rota 43 ao sul. Área de lago, não cidade compacta. O lago domina o centro, cercado por terra, árvores e casas nas margens.",
+      "Tiles: grande superfície aquática contínua, contorno de margem em todos os lados, reentrâncias de terra, bosque e acessos condicionados por Cut/Surf. Manter espaço para o encontro do Gyarados vermelho na água.",
+      "HGSS inclui mudanças por chuva/inundação e dia da semana: os estados de terreno e acesso devem ser tratados como variantes, não sobrepostos no mesmo mapa.",
+      "Montagem: não substituir a água central por gramado para facilitar circulação; criar uma trilha costeira legível e preservar os ramais das casas."
+    ]
+  },
+  "MAP_ROUTE_29": {"name": "Rota 29", "notes": [
+    "Liga New Bark a leste a Cherrygrove a oeste. É horizontal e ocupa três setores de 32×32; o portão para a Rota 46 fica no setor central, ao norte.",
+    "Tiles: caminho de terra sinuoso, gramado baixo, manchas de mato alto, árvores de limite e degraus saltáveis. A rota usa desníveis para facilitar a volta para leste sem eliminar uma passagem caminhável no sentido oposto.",
+    "Preservar o ramo norte do portão e os espaços de encontros ao lado da trilha. Apricorn e item são objetos/eventos separados, não estampa aleatória de decoração. Placas devem apontar o eixo leste/oeste e o ramal norte.",
+    "Na ROM atual a saída oeste está fechada até Cherrygrove existir. A referência abaixo registra a rota original completa, sem esse bloqueio provisório."
+  ]},
+  "MAP_ROUTE_30": {"name": "Rota 30", "notes": [
+    "Sai de Cherrygrove para o norte e continua até a Rota 31. O caminho inicial leva à casa do Sr. Pokémon, enquanto outro ramo liga ao corredor dos treinadores.",
+    "Tiles: estrada rural estreita, gramado, mato alto em blocos, árvores, pequenos lagos e degraus. Há casas e árvores de Apricorn; reservar uma clareira junto a cada fachada.",
+    "Separar o ramal do Sr. Pokémon da progressão para Violet. A bifurcação deve ser desenhada na trilha e confirmada por colisão, sem corredores falsos terminando em árvore."
+  ]},
+  "MAP_ROUTE_31": {"name": "Rota 31", "notes": [
+    "Trecho curto entre a Rota 30 ao sul e Violet a oeste. Dark Cave tem entrada no lado leste/nordeste.",
+    "Tiles: estrada, mato alto, água pequena, árvores e face rochosa para a entrada da caverna. A abertura escura deve estar embutida na parede da montanha, não flutuando no gramado.",
+    "Separar o portal urbano de Violet da entrada de Dark Cave. Manter a circulação entre os dois caminhos e o retorno à Rota 30."
+  ]},
+  "MAP_ROUTE_32": {"name": "Rota 32", "notes": [
+    "Longo eixo norte/sul entre Violet e Union Cave. Há ligação lateral com Ruins of Alph e o Centro Pokémon próximo à entrada sul da caverna.",
+    "Tiles: gramado e mato alto na faixa terrestre, lago/rio e passarelas da área dos pescadores, margem definida, cerca e taludes. A linha férrea elevada de HGSS é uma estrutura própria, sem virar piso caminhável no nível da rota.",
+    "Montagem: preservar a alternativa entre trilha e área de pesca, a continuidade da água e a pequena clareira de serviço junto ao Centro. O corredor sul termina na abertura de Union Cave na rocha."
+  ]},
+  "MAP_ROUTE_33": {"name": "Rota 33", "notes": [
+    "Trecho curto e horizontal entre a saída sul de Union Cave, a leste, e Azalea, a oeste. Em HGSS a chuva é uma característica desta rota.",
+    "Tiles: terra úmida, gramado/mato, falésia ao redor da caverna, árvores e Apricorn. Compor o patamar da saída e a trilha curta antes da entrada da cidade.",
+    "Não alongar artificialmente a rota com uma estrada copiada da Rota 1. A entrada de Union Cave e a ligação com Azalea são os dois marcos estruturais."
+  ]},
+  "MAP_ROUTE_34": {"name": "Rota 34", "notes": [
+    "Liga o portão de Ilex Forest ao sul a Goldenrod ao norte. Day Care ocupa o lado leste da rota; há costa e acesso por Surf a uma área separada de treinadoras.",
+    "Tiles: caminho de terra, campos de mato alto, gramado, cerca do Day Care, costa e água. A cerca deve delimitar um recinto, com abertura coerente, sem cortar o caminho público.",
+    "Distinguir a casa/recinto do Day Care de residências comuns. A enseada não deve criar uma passagem terrestre até a área acessível somente pela água."
+  ]},
+  "MAP_ROUTE_35": {"name": "Rota 35", "notes": [
+    "Sai de Goldenrod para o norte e chega aos portões de National Park e do desvio de HGSS para Pokéathlon. Um ramo lateral liga ao lado da Rota 36.",
+    "Tiles: trilha principal, cerca, mato alto no ramo lateral, árvores, água e pequenos pontos de acesso condicionado. Manter o corredor público e o atalho claramente distintos.",
+    "Os portões são edifícios de passagem com duas saídas; seus retornos não podem levar ao centro de uma fachada. A ligação ao Pokéathlon é uma ramificação, não substitui o acesso ao parque."
+  ]},
+  "MAP_ROUTE_36": {"name": "Rota 36", "notes": [
+    "Corredor entre Violet a leste e o setor de National Park a oeste, com ramal norte para a Rota 37 e acesso à área de Ruins of Alph.",
+    "Tiles: trilhas rurais, manchas de mato alto, árvores, pequenas cercas e o gargalo de Sudowoodo. O bloqueio usa um objeto/evento no estreitamento, não uma parede permanente.",
+    "Manter a bifurcação central legível. Após remover Sudowoodo, a mesma trilha deve conectar os ramos sem alterar toda a geometria."
+  ]},
+  "MAP_ROUTE_37": {"name": "Rota 37", "notes": [
+    "Trecho norte/sul entre a Rota 36 e Ecruteak. O conjunto de árvores de Apricorn é um marco do lado leste.",
+    "Tiles: gramado, mato alto e pequenos degraus entre caminhos paralelos, com limites arborizados. Preservar a área aberta para os treinadores e a aproximação sul da cidade.",
+    "Não transformar a curta rota em uma floresta fechada; o caminho de ida e as descidas de retorno precisam continuar reconhecíveis."
+  ]},
+  "MAP_ROUTE_38": {"name": "Rota 38", "notes": [
+    "Segue de Ecruteak a leste para a Rota 39 a oeste. É uma área rural horizontal com caminhos que contornam grupos de mato e árvores.",
+    "Tiles: terra clara, gramado, campos de mato alto, cercas e degraus baixos. A silhueta geral é de campo, não de cais nem de trilha montanhosa.",
+    "Manter pontos de confronto nas clareiras e uma passagem contínua entre os extremos. Usar árvores completas para os limites, sem cortar a copa nos encontros com a cerca."
+  ]},
+  "MAP_ROUTE_39": {"name": "Rota 39", "notes": [
+    "Continua da Rota 38 ao norte até Olivine ao sul. MooMoo Farm ocupa a zona norte/oeste da rota.",
+    "Tiles: pasto, cerca de fazenda, gramado, mato alto, caminho e edifícios rurais. Separar casa, celeiro e recinto das Miltank por pisos e cercas coerentes.",
+    "A fazenda não é decoração espalhada pelo caminho: precisa de entradas e área de atendimento. A trilha sul se torna o acesso urbano de Olivine."
+  ]},
+  "MAP_ROUTE_40": {"name": "Rota 40", "notes": [
+    "Fica a oeste de Olivine, com entrada para o complexo de Battle Frontier ao norte e ligação marítima à Rota 41 ao sul.",
+    "Tiles: faixa de praia, água de mar, margens de areia, rochas quebráveis e estrutura do acesso ao complexo. A estrada terrestre termina na praia; a continuação é por Surf.",
+    "Não preencher o oceano com o tile de borda. Preservar a faixa costeira acessível, a passagem norte e os espaços dos objetos Rock Smash."
+  ]},
+  "MAP_ROUTE_41": {"name": "Rota 41", "notes": [
+    "Área marítima entre a Rota 40 ao norte e Cianwood a oeste. Whirl Islands ocupa quatro ilhas com entradas distintas.",
+    "Tiles: água aberta predominante, redemoinhos como eventos/superfícies específicas, ilhas rochosas, areia nas margens, cavernas e rochas de limite.",
+    "Cada ilha precisa de contorno fechado e porta própria. A água deve permitir navegação ao redor das massas de terra; redemoinhos não são simples decoração sem comportamento."
+  ]},
+  "MAP_ROUTE_42": {"name": "Rota 42", "notes": [
+    "Corredor leste/oeste entre Ecruteak e Mahogany. Mt. Mortar tem várias entradas na encosta ao norte; superfícies de água separam faixas terrestres.",
+    "Tiles: face rochosa, aberturas de caverna, patamares, água doce, gramado e árvores de Apricorn. Preservar o relevo e as três entradas de Mt. Mortar como destinos distintos.",
+    "A rota não é um túnel único: o percurso exterior usa terra e água. Deixar cada entrada apoiada na parede rochosa e registrar o retorno ao patamar correspondente."
+  ]},
+  "MAP_ROUTE_43": {"name": "Rota 43", "notes": [
+    "Liga Mahogany ao sul ao Lake of Rage ao norte. Existem caminhos alternativos, incluindo o corredor do portão associado à cobrança da Team Rocket.",
+    "Tiles: bosque, mato alto, trilha, pequenos lagos e cerca/edifício do portão. Dar ao caminho alternativo espaço suficiente para não forçar a passagem pelo evento de cobrança.",
+    "Preservar as variantes de água/chuva de HGSS ao planejar a borda norte. Não colocar o portão no lugar do lago nem misturar estados de inundação."
+  ]},
+  "MAP_ROUTE_44": {"name": "Rota 44", "notes": [
+    "Liga Mahogany a oeste à entrada de Ice Path a leste. Dois lagos moldam os caminhos e deixam uma área de mato alto acessível pela água.",
+    "Tiles: trilha estreita, água doce, margens curvas, ilhota/terra central com mato e falésia junto à caverna. A área central não deve ganhar uma ponte terrestre inexistente.",
+    "Conservar os caminhos que contornam a água e o patamar da entrada de Ice Path. A abertura fica em rocha, com espaço livre para sair da caverna."
+  ]},
+  "MAP_ROUTE_45": {"name": "Rota 45", "notes": [
+    "Desce de Blackthorn ao norte para a região da Rota 46 ao sul; há entrada de Dark Cave na face oeste. É uma rota montanhosa de descida com caminhos paralelos.",
+    "Tiles: falésias, beiradas de patamar, saltos voltados para baixo, gramado, mato e curso de água. A cascata/água e as faces verticais devem expressar a altura, sem usar escada como substituto de salto.",
+    "Montagem: desenhar os patamares e ramais primeiro. Preservar a direção dos saltos e a separação entre faixas; a volta ao norte não deve virar caminhada livre por cima de uma parede."
+  ]},
+  "MAP_ROUTE_46": {"name": "Rota 46", "notes": [
+    "Conecta a região da Rota 45 ao norte ao portão da Rota 29 ao sul, com entrada de Dark Cave no setor superior. É vista inicialmente pelo seu trecho sul.",
+    "Tiles: mato alto na clareira baixa, encostas, degraus de descida, árvores e patamares superiores. O trajeto completo é principalmente descendente.",
+    "Preservar a diferença entre a pequena área inicial acessível pela Rota 29 e o caminho vindo da montanha. Não liberar uma subida através dos saltos usando tiles de chão comuns."
+  ]},
+  "MAP_ROUTE_47": {"name": "Rota 47", "notes": [
+    "Adição de HGSS: parte de Cliff Edge Gate, a oeste de Cianwood, e segue pelos penhascos até a Rota 48. Cliff Cave conecta níveis; Embedded Tower é um destino separado.",
+    "Tiles: plataformas de rocha, faces altas de falésia, pontes suspensas, água no nível inferior, escadas e entradas de caverna. A coordenada horizontal por si só não resolve a circulação: conservar alturas e saídas de cada piso.",
+    "Montagem: preparar uma camada lógica por nível. Corrimãos ficam acima/lado do piso da ponte, nunca como barreira cortando o meio. Uma entrada de Cliff Cave não pode retornar num andar diferente sem transição."
+  ]},
+  "MAP_ROUTE_48": {"name": "Rota 48", "notes": [
+    "Curto acesso terrestre entre a Rota 47 ao sul e Safari Zone Gate ao norte. É um corredor verde elevado, sem o grande percurso marítimo da rota anterior.",
+    "Tiles: gramado, mato alto, trilha, árvores e limite de penhasco. Conservar o acesso final à área comercial da Safari Zone.",
+    "Não colar diretamente a fachada da Safari Zone ao fim de uma ponte da Rota 47: a Rota 48 forma a transição de terreno entre os dois locais."
+  ]},
+  "MAP_ROUTE_28": {"name": "Rota 28 — apêndice de ligação com Mt. Silver", "notes": [
+    "É numerada com as rotas de Kanto e incluída aqui pela ligação com Mt. Silver no mapa regional enviado. Não é uma das rotas 29–48 de Johto.",
+    "Liga a região do portão de Pokémon League ao acesso de Mt. Silver. Tiles de estrada rural, bosque, mato e água delimitam um corredor de pós-jogo.",
+    "Separar a área exterior de Mt. Silver, com Centro e entrada da montanha, do trecho da Rota 28. Preservar os bloqueios de acesso de história."
+  ]},
+  "MAP_SAFARI_ZONE_GATE": {"name": "Safari Zone Gate / Entrada da Safari Zone", "notes": [
+    "Conexão: Rota 48 ao sul e edifício de recepção da Safari Zone ao norte. É uma área de serviços no fim do caminho dos penhascos.",
+    "Tiles: praça/caminho, vegetação, estruturas comerciais e a grande entrada da recepção. Manter a fachada principal centralizada no seu próprio patamar.",
+    "As áreas configuráveis da Safari Zone são mapas separados, não um único campo de mato ao lado da praça. Seus biomas não devem ser misturados ao exterior do portão."
+  ]}
+}

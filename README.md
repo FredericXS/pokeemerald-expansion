@@ -9,6 +9,8 @@ and open `pokegenerations-progression.gba`. It adds a progression assistant,
 first-entry team transfer with full-PC protection, three Johto starter
 reservations, HGSS-based New Bark and Route 29 maps, distinct interiors,
 community building graphics and healing at the player’s home.
+The scientists also give a shiny level-30 Mew in Kanto and Celebi in Johto,
+once per region. See the [detailed HGSS tile reference](docs/generations/JOHTO_HGSS_REFERENCIA_TILES.txt).
 See [controls, transfer rules and validation](docs/generations/JOHTO_TEST_ROM.md).
 
 # About `pokeemerald-expansion`

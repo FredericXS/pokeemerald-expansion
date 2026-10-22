@@ -40,8 +40,10 @@ jobs:
             echo '### Johto test ROM'
             echo 'Download **pokemon-generations-johto-test** from the Artifacts section of this run.'
             echo 'Extract the ZIP and open `pokegenerations-progression.gba` in mGBA.'
-            echo 'Start a new game. The scientist in the Pallet bedroom enables the progression shortcut.'
-            echo 'Obtain a Kanto starter from Oak, then speak to the sailor in Pallet to travel to Johto.'
+            echo 'The scientist in the Pallet bedroom applies the shortcut and gives one shiny level-30 Mew.'
+            echo 'The scientist in New Bark applies the Johto shortcut and gives one shiny level-30 Celebi.'
+            echo 'With a full party, make room and talk again to receive the pending gift.'
+            echo 'After receiving Mew, speak to the sailor in Pallet to travel to Johto; Oak’s introduction remains available.'
             echo
             echo "Commit: $GITHUB_SHA"
             echo

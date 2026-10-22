@@ -62,14 +62,31 @@ Generations_EventScript_TestProgress::
 	lock
 	faceplayer
 #if GENERATIONS_TEST_ROM
-	msgbox Generations_Text_Shortcut, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, Generations_EventScript_Cancel
 	special Generations_TestProgress
+	goto_if_eq VAR_RESULT, 2, Generations_EventScript_MewGift
+	goto_if_eq VAR_RESULT, 3, Generations_EventScript_CelebiGift
+	goto_if_eq VAR_RESULT, 4, Generations_EventScript_GiftPending
 	msgbox Generations_Text_ShortcutDone, MSGBOX_DEFAULT
 #else
 	msgbox Generations_Text_NoShortcut, MSGBOX_DEFAULT
 #endif
 	goto Generations_EventScript_Cancel
+
+#if GENERATIONS_TEST_ROM
+Generations_EventScript_MewGift::
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox Generations_Text_MewGift, MSGBOX_DEFAULT
+	waitfanfare
+	goto Generations_EventScript_Cancel
+Generations_EventScript_CelebiGift::
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox Generations_Text_CelebiGift, MSGBOX_DEFAULT
+	waitfanfare
+	goto Generations_EventScript_Cancel
+Generations_EventScript_GiftPending::
+	msgbox Generations_Text_GiftPending, MSGBOX_DEFAULT
+	goto Generations_EventScript_Cancel
+#endif
 
 Generations_EventScript_PC::
 	lockall
@@ -151,17 +168,11 @@ Generations_Text_Locked::
 	.string "CHAMPION before your first trip.\p"
 	.string "Return requires four JOHTO badges.\n"
 	.string "If transfer failed, nothing moved.$"
-Generations_Text_Shortcut::
-	.string "TEST ROM progression shortcut.\p"
-	.string "In KANTO: eight badges + CHAMPION.\n"
-	.string "In JOHTO: first four badges.\p"
-	.string "This changes your saved progress.\n"
-	.string "Apply the shortcut?$"
 Generations_Text_ShortcutDone::
-	.string "Progress updated. In PALLET TOWN,\n"
-	.string "speak to the sailor near the sign.\p"
-	.string "In JOHTO, PC and return travel\n"
-	.string "are now available.$"
+	.string "Shortcut applied. Regional\n"
+	.string "progress is unlocked.\p"
+	.string "The regional shiny gift can\n"
+	.string "only be received once.$"
 Generations_Text_NoShortcut::
 	.string "Progress shortcuts are available\n"
 	.string "only in the progression TEST ROM.$"
@@ -278,3 +289,19 @@ Generations_Text_Route46::
     .string "ROUTE 46 is north of this gate.\p"
     .string "Construction has closed that exit.\n"
     .string "The south door returns to ROUTE 29.$"
+
+Generations_Text_MewGift::
+	.string "Progress updated! A shiny Lv.30\n"
+	.string "MEW joined your party!\p"
+	.string "TIMID nature, perfect IVs.\n"
+	.string "This gift is awarded only once.$"
+Generations_Text_CelebiGift::
+	.string "Progress updated! A shiny Lv.30\n"
+	.string "CELEBI joined your party!\p"
+	.string "MODEST nature, perfect IVs.\n"
+	.string "This gift is awarded only once.$"
+Generations_Text_GiftPending::
+	.string "Progress updated. Your party is\n"
+	.string "full, so the shiny gift can wait.\p"
+	.string "Make room for one POKéMON, then\n"
+	.string "talk to me again. Nobody moved.$"

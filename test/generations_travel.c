@@ -397,3 +397,82 @@ TEST("Generations travel: Johto blackout returns to the local house and healer")
     EXPECT_EQ(heal->x, 23);
     EXPECT_EQ(heal->y, 13);
 }
+
+#if GENERATIONS_TEST_ROM
+TEST("Generations travel: scientist awards one shiny level 30 mythical per region")
+{
+    enum Region region;
+    PARAMETRIZE { region = REGION_KANTO; }
+    PARAMETRIZE { region = REGION_JOHTO; }
+    PrepareTravel(1);
+    if (region == REGION_JOHTO)
+        EXPECT_EQ(Generations_EnterJohto(SPECIES_CHIKORITA), GENERATIONS_TRAVEL_OK);
+    struct Pokemon original = gParties[B_TRAINER_PLAYER][0];
+    RUN_OVERWORLD_SCRIPT(special Generations_TestProgress;);
+    EXPECT_EQ(gSpecialVar_Result, region == REGION_KANTO ? 2 : 3);
+    EXPECT_EQ(gPartiesCount[B_TRAINER_PLAYER], 2);
+    EXPECT(FlagGet(FLAG_SYS_POKEMON_GET));
+    EXPECT_EQ(memcmp(&original, &gParties[B_TRAINER_PLAYER][0], sizeof(original)), 0);
+    struct Pokemon *gift = &gParties[B_TRAINER_PLAYER][1];
+    EXPECT_EQ(GetMonData(gift, MON_DATA_SPECIES), region == REGION_KANTO ? SPECIES_MEW : SPECIES_CELEBI);
+    EXPECT_EQ(GetMonData(gift, MON_DATA_LEVEL), 30);
+    EXPECT_EQ(GetMonData(gift, MON_DATA_IS_SHINY), TRUE);
+    EXPECT_EQ(GetMonData(gift, MON_DATA_SANITY_IS_BAD_EGG), FALSE);
+    EXPECT_EQ(GetNature(gift), region == REGION_KANTO ? NATURE_TIMID : NATURE_MODEST);
+    for (u32 iv = MON_DATA_HP_IV; iv <= MON_DATA_SPDEF_IV; iv++)
+        EXPECT_EQ(GetMonData(gift, iv), 31);
+    EXPECT_EQ(GetMonData(gift, MON_DATA_HP), GetMonData(gift, MON_DATA_MAX_HP));
+    EXPECT_EQ(GetMonData(gift, MON_DATA_MOVE1), MOVE_PSYCHIC);
+    EXPECT_EQ(GetMonData(gift, MON_DATA_MOVE4), region == REGION_KANTO ? MOVE_ROOST : MOVE_RECOVER);
+    EXPECT(Generations_GetRegionState(region) & REGION_PROGRESS_TEST_GIFT);
+    struct TravelSnapshot *s = Snapshot();
+    EXPECT(s != NULL);
+    RUN_OVERWORLD_SCRIPT(special Generations_TestProgress;);
+    EXPECT_EQ(gSpecialVar_Result, TRUE);
+    ExpectUnchanged(s);
+}
+
+TEST("Generations travel: scientist keeps full party gift pending even with a full PC")
+{
+    PrepareTravel(PARTY_SIZE);
+    Generations_InitNewGame();
+    FillPC();
+    struct Pokemon original[PARTY_SIZE];
+    memcpy(original, gParties[B_TRAINER_PLAYER], sizeof(original));
+    RUN_OVERWORLD_SCRIPT(special Generations_TestProgress;);
+    EXPECT_EQ(gSpecialVar_Result, 4);
+    EXPECT_EQ(gPartiesCount[B_TRAINER_PLAYER], PARTY_SIZE);
+    EXPECT_EQ(memcmp(original, gParties[B_TRAINER_PLAYER], sizeof(original)), 0);
+    EXPECT(Generations_IsRegionUnlocked(REGION_JOHTO));
+    EXPECT(!(Generations_GetRegionState(REGION_KANTO) & REGION_PROGRESS_TEST_GIFT));
+    // Make room, as the pending-gift dialogue requests, then retry.
+    ZeroMonData(&gParties[B_TRAINER_PLAYER][PARTY_SIZE - 1]);
+    gPartiesCount[B_TRAINER_PLAYER]--;
+    RUN_OVERWORLD_SCRIPT(special Generations_TestProgress;);
+    EXPECT_EQ(gSpecialVar_Result, 2);
+    EXPECT_EQ(gPartiesCount[B_TRAINER_PLAYER], PARTY_SIZE);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][PARTY_SIZE - 1], MON_DATA_SPECIES), SPECIES_MEW);
+    EXPECT(Generations_GetRegionState(REGION_KANTO) & REGION_PROGRESS_TEST_GIFT);
+}
+TEST("Generations travel: Mew before Oak preserves starter recording and nickname selection")
+{
+    PrepareTravel(0);
+    Generations_InitNewGame();
+    u32 oakScene = VarGet(VAR_MAP_SCENE_PALLET_TOWN_OAK);
+    RUN_OVERWORLD_SCRIPT(special Generations_TestProgress;);
+    EXPECT_EQ(gPartiesCount[B_TRAINER_PLAYER], 1);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_MEW);
+    EXPECT(!(Generations_GetRegionState(REGION_KANTO) & REGION_PROGRESS_STARTER));
+    EXPECT_EQ(VarGet(VAR_MAP_SCENE_PALLET_TOWN_OAK), oakScene);
+    RUN_OVERWORLD_SCRIPT(
+        givemon SPECIES_BULBASAUR, 5;
+        special Generations_RecordStarter;
+        call Common_EventScript_GetGiftMonPartySlot;
+    );
+    EXPECT_EQ(gPartiesCount[B_TRAINER_PLAYER], 2);
+    EXPECT_EQ(gSpecialVar_0x8004, 1);
+    EXPECT(Generations_GetRegionState(REGION_KANTO) & REGION_PROGRESS_STARTER);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_MEW);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][1], MON_DATA_SPECIES), SPECIES_BULBASAUR);
+}
+#endif
